@@ -71,7 +71,6 @@ public class App  {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
-	@Column (name="autor", nullable=false, unique=false)
 	public Programador getAutor() {
 		return autor;
 	}

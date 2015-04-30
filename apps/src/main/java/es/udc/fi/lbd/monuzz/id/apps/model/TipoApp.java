@@ -2,6 +2,16 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 
 import java.util.Arrays;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="TIPO_APP")
 public class TipoApp {
 
 	private Long idTipoApp;
@@ -18,16 +28,26 @@ public class TipoApp {
 		this.descripcion = descripcion;
 		this.icono = icono;
 	}
-
+	
+	@Id
+	@SequenceGenerator(name = "idTipoApp", sequenceName = "id_tipo_app_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="idTipoApp")
+	@Column (name="id_tipo_app", nullable=false, unique=true)	
 	public Long getIdTipoApp() {
 		return idTipoApp;
 	}
+	
+	@Column (name="nombre", nullable=false, unique=false)
 	public String getNombre() {
 		return nombre;
 	}
+	
+	@Column (name="descripcion", nullable=false, unique=false)
 	public String getDescripcion() {
 		return descripcion;
 	}
+	
+	@Column (name="icono", nullable=false, unique=false)
 	public byte[] getIcono() {
 		return icono;
 	}

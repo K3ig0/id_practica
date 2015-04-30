@@ -1,8 +1,22 @@
 package es.udc.fi.lbd.monuzz.id.apps.model;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="CATEGORIA")
 public class Categoria {
 
 	private Long idCategoria;
@@ -17,15 +31,27 @@ public class Categoria {
 		this.nombre = nombre;
 		this.madre=null;
 	}
+	
+	@Id
+	@SequenceGenerator(name = "idCategoria", sequenceName = "id_categoria_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="idCategoria")
+	@Column (name="id_categoria", nullable=false, unique=true)	
 	public Long getIdCategoria() {
 		return idCategoria;
 	}
+	
+	@Column (name="nombre", nullable=false, unique=true)	
 	public String getNombre() {
 		return nombre;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="id_categoria_madre")
 	public Categoria getmadre() {
 		return madre;
 	}
+	
+	@OneToMany(mappedBy="madre")
 	public Set<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

@@ -3,7 +3,16 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
+
+@Entity
+@DiscriminatorValue("CLI")
 public class Cliente extends Usuario {
 	
 	private String tipoCliente;
@@ -26,13 +35,22 @@ public class Cliente extends Usuario {
 		this.saldo=saldo;
 	}
 	
-		
+	@Column (name="tipo_cliente", nullable=true, unique=false)
 	public String getTipoCliente() {
 		return tipoCliente;
 	}
+	
+	@Column (name="saldo", nullable=true, unique=false)
 	public Float getSaldo() {
 		return saldo;
 	}
+	
+	@ManyToMany
+	@JoinTable (
+			name="CLI_APP",
+			joinColumns={@JoinColumn(name="id_app")},
+			inverseJoinColumns = {@JoinColumn(name="id_usuario")}
+			)
 	public List<App> getApps() {
 		return apps;
 	}

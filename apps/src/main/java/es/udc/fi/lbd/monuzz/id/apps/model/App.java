@@ -4,8 +4,20 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
+@Entity
+@Table(name="APP")
 public class App  {
 	
 	private Long idApp;
@@ -32,31 +44,54 @@ public class App  {
 		this.votos=new Long(0);
 	}
 	
-
+	@Id
+	@SequenceGenerator(name = "idApp", sequenceName = "id_app_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="idApp")
+	@Column (name="id_app", nullable=false, unique=true)
 	public Long getIdApp() {
 		return idApp;
 	}
+	
+	@Column (name="titulo", nullable=false, unique=true)
 	public String getTitulo() {
 		return titulo;
 	}
+	
+	@Column (name="fecha_alta", nullable=false, unique=false)
 	public Timestamp getFechaDeAlta() {
 		return fechaDeAlta;
 	}
+	
+	@Column (name="precio", nullable=false, unique=false)
 	public Float getPrecio() {
 		return precio;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="id_usuario")
+	@Column (name="autor", nullable=false, unique=false)
 	public Programador getAutor() {
 		return autor;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="id_categoria")
 	public Categoria getCategoria() {
 		return categoria;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="id_tipo_app")
 	public TipoApp getTipoApp() {
 		return tipoApp;
 	}
+	
+	@OneToMany(mappedBy="id_app")
 	public List<Version> getVersiones() {
 		return versiones;
 	}
+	
+	@Column (name="num_votos", nullable=false, unique=false)
 	public Long getVotos() {
 		return votos;
 	}

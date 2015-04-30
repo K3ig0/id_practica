@@ -3,7 +3,13 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
+@Entity
+@DiscriminatorValue("PRO")
 public class Programador extends Usuario {
 	
 	private Long numVotos;
@@ -23,14 +29,16 @@ public class Programador extends Usuario {
 		this.nombreEnPantalla = nombreEnPantalla;
 		this.numVotos=new Long(0);
 	}
-		
+	
+	@Column (name="num_votos", nullable=true, unique=false)
 	public Long getNumVotos() {
 		return numVotos;
 	}
+	
+	@OneToMany(mappedBy="autor")
 	public List<App> getApps() {
 		return apps;
 	}
-
 
 	public void setNumVotos(Long numVotos) {
 		this.numVotos = numVotos;

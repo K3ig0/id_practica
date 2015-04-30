@@ -2,7 +2,19 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name="VERSION")
 public class Version {
 
 	private Long idVersion;
@@ -22,15 +34,26 @@ public class Version {
 		app.getVersiones().add(this);
 	}
 
+	@Id
+	@SequenceGenerator(name = "idVersion", sequenceName = "id_version_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="idVersion")
+	@Column (name="id_version", nullable=false, unique=true)
 	public Long getIdVersion() {
 		return idVersion;
 	}
+	
+	@Column (name="num_version", nullable=false, unique=false)
 	public String getNumVersion() {
 		return numVersion;
 	}
+	
+	@Column (name="fecha_publicacion", nullable=false, unique=false)
 	public Timestamp getFechaDePublicacion() {
 		return fechaDePublicacion;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="id_app")
 	public App getApp() {
 		return app;
 	}

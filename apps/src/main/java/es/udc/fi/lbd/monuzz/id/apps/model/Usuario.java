@@ -1,6 +1,22 @@
 package es.udc.fi.lbd.monuzz.id.apps.model;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+@Table(name="USUARIO")
 public class Usuario {
 	
 	protected Long idUsuario;	
@@ -11,26 +27,40 @@ public class Usuario {
 	protected String apellido2;
 	protected String nombreEnPantalla;
 
-	
-
+	@Id
+	@SequenceGenerator(name = "idUsuario", sequenceName = "id_usuario_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="idUsuario")
+	@Column (name="id_usuario", nullable=false, unique=true)
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
+	
+	@Column (name="usuario", nullable=false, unique=true)
 	public String getNombreDeUsuario() {
 		return nombreDeUsuario;
 	}
+	
+	@Column (name="pass", nullable=false, unique=false)
 	public String getPassword() {
 		return password;
 	}
+	
+	@Column (name="nombre", nullable=false, unique=false)
 	public String getNombre() {
 		return nombre;
 	}
+	
+	@Column (name="ap1", nullable=false, unique=false)
 	public String getApellido1() {
 		return apellido1;
 	}
+	
+	@Column (name="ap2", nullable=false, unique=false)
 	public String getApellido2() {
 		return apellido2;
 	}
+	
+	@Column (name="nome_pantalla", nullable=true, unique=false)
 	public String getNombreEnPantalla() {
 		return nombreEnPantalla;
 	}

@@ -5,43 +5,52 @@ import java.util.List;
 import es.udc.fi.lbd.monuzz.id.apps.model.*;
 
 public class UsuarioDAOImplementation implements UsuarioDAO {
+
+	@Override
 	public Long create(Usuario miUsuario) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void remove (Usuario miUsuario) {
-		//@TODO
+
+	@Override
+	public void remove(Usuario miUsuario) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void update (Usuario miUsuario) {
-		//@TODO
+
+	@Override
+	public void update(Usuario miUsuario) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
 	public Usuario findById(Long id) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public Usuario findByNombreDeUsuario (String nombreDeUsuario) {
-		//@TODO
+
+	@Override
+	public Usuario findByNombreDeUsuario(String nombreDeUsuario) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Usuario> findAll() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Cliente> findAllClientes() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Programador> findAllProgramadores() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -9,48 +9,59 @@ import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
 
 public class AppDaoImplementation implements AppDAO {
+
+	@Override
 	public Long create(App miApp) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void update (App miApp){
-		//@TODO
+
+	@Override
+	public void update(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void remove (App miApp) {
-		//@TODO
+
+	@Override
+	public void remove(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public App findById (Long id) {
-		//@TODO
+
+	@Override
+	public App findById(Long id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public App findByTitulo (String miTitulo) {
-		//@TODO
+
+	@Override
+	public App findByTitulo(String miTitulo) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<App> findAllByProgramador (Programador miProgramador) {
-		//@TODO
+
+	@Override
+	public List<App> findAllByProgramador(Programador miProgramador) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<App> findAllByCliente (Cliente miCliente) {
-		//@TODO
+
+	@Override
+	public List<App> findAllByCliente(Cliente miCliente) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<App> findAllByCategoria (Categoria miCategoria) {
-		//@TODO
+
+	@Override
+	public List<App> findAllByCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<Cliente> findAllClientes (App miApp) {
-		//@TODO
+
+	@Override
+	public List<Cliente> findAllClientes(App miApp) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

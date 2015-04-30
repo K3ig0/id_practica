@@ -13,116 +13,143 @@ import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 import es.udc.fi.lbd.monuzz.id.apps.model.Version;
 
 public class UsuarioImplementation implements UsuarioService {
+
+	@Override
+	public void registrarNuevoUsuario(Usuario miUsuario) {
+		// TODO Auto-generated method stub
 		
-	public void registrarNuevoUsuario (Usuario miUsuario) {
-		//@TODO
 	}
-	
-	public void actualizarUsuario (Usuario miUsuario) {
-		//@TODO
+
+	@Override
+	public void actualizarUsuario(Usuario miUsuario) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	public void borrarUsuario (Usuario miUsuario) {		// Salta excepcion si aún hay apps ligadas a un programador. Para los clientes, cancela sus subscripciones y borra los clientes
-		//@TODO
+
+	@Override
+	public void borrarUsuario(Usuario miUsuario) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	public Usuario autenticarUsuario (String login, String password) {
-		//@TODO
+
+	@Override
+	public Usuario autenticarUsuario(String login, String password) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public Usuario buscarUsuarioPorId(Long id) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public Usuario buscarUsuarioPorLogin(String login) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Usuario> obtenerListaUsuarios() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Cliente> obtenerListaClientes() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Programador> obtenerListaProgramadores() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void registrarApp (App miApp) {
-		//@TODO
+
+	@Override
+	public void registrarApp(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void actualizarApp (App miApp) {
-		//@TODO
+
+	@Override
+	public void actualizarApp(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void borrarApp(App miApp) {					// Salta excepcion si aun hay clientes ligados a la App
-		//@TODO
+
+	@Override
+	public void borrarApp(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
 	public App buscarAppPorId(Long id) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public App buscarAppPorTitulo(String miTitulo) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<App> obtenerAppsProgramador (Programador miProgramador) {
-		//@TODO
+
+	@Override
+	public List<App> obtenerAppsProgramador(Programador miProgramador) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<App> obtenerAppsCliente (Cliente miCliente) {
-		//@TODO
+
+	@Override
+	public List<App> obtenerAppsCliente(Cliente miCliente) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<Cliente> obtenerClientesApp (App miApp) {
-		//@TODO
+
+	@Override
+	public List<Cliente> obtenerClientesApp(App miApp) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void cancelarClientes (App miApp) {
-		//@TODO
+
+	@Override
+	public void cancelarClientes(App miApp) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void registrarNuevaVersion (Version miVersion) {
-		//@TODO
+
+	@Override
+	public void registrarNuevaVersion(Version miVersion) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void borrarVersion (Version miVersion) {		// Salta excepcion si es la última versión de una app: no se debería borrar
-		//@TODO
+
+	@Override
+	public void borrarVersion(Version miVersion) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public Version BuscarVersionPorId (Long Id) {
-		//@TODO
+
+	@Override
+	public Version BuscarVersionPorId(Long Id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<Version> obtenerListaVersiones(App miApp) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public Version obtenerUltimaVersion (App miApp) {
-		//@TODO
+
+	@Override
+	public Version obtenerUltimaVersion(App miApp) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-}
+		
+	}

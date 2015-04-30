@@ -7,75 +7,89 @@ import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 
 public class AdminImplementation implements AdminService {
-	
-	public void registrarNuevoTipoApp (TipoApp miTipo) {
-		//@TODO
+
+	@Override
+	public void registrarNuevoTipoApp(TipoApp miTipo) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void borrarTipoApp(TipoApp miTipo) {  							// Salta excepcion si aun hay apps ligadas al tipo
-		//@TODO
+
+	@Override
+	public void borrarTipoApp(TipoApp miTipo) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
 	public TipoApp buscarTipoAppPorId(Long id) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public TipoApp buscarTipoAppPorNombre(String nombre) {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	public List<TipoApp> buscarTodosTipoApp() {
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void registrarNuevaCategoria (Categoria miCategoria) {
-		//@TODO
 
-	}
-	
-	public void modificarCategoria (Categoria miCategoria) {
-		//@TODO
+	@Override
+	public void registrarNuevaCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void borrarCategoria (Categoria miCategoria) {  					// Salta excepcion si aun hay apps ligadas a la categoria (o sus subcategorias)
-		//@TODO
+
+	@Override
+	public void modificarCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
+	public void borrarCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public Categoria buscarCategoriaPorId(Long id) {
-		//@TODO
-		return null;
-	}
-	
-	public Categoria buscarCategoriaPorNombre(String nombre) {
-		//@TODO
-		return null;
-	}
-	
-	public List<Categoria> buscarCategoriasPrincipales() { 					// Categorias de nivel 1 (no son subcategorias de ninguna otra)
-		//@TODO
-		return null;
-	}
-	
-	public List<Categoria> buscarSubcategorias(Categoria miCategoria) {  	// Subcategorias directas
-		//@TODO
-		return null;
-	}
-	
-	public Long calcularNumAppsCategoria (Categoria miCategoria) { 			// TODAS las apps, incluidas las de subcategorias
-		//@TODO
-		return null;
-	}
-	
-	public List<App> buscarAppsCategoria (Categoria miCategoria) {			// TODAS las apps, incluidas las de subcategorias
-		//@TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-}
+	@Override
+	public Categoria buscarCategoriaPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Categoria> buscarCategoriasPrincipales() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Categoria> buscarSubcategorias(Categoria miCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long calcularNumAppsCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<App> buscarAppsCategoria(Categoria miCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	}

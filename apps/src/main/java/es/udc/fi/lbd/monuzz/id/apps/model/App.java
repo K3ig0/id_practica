@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,26 +69,26 @@ public class App  {
 		return precio;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
 	@Column (name="autor", nullable=false, unique=false)
 	public Programador getAutor() {
 		return autor;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_categoria")
 	public Categoria getCategoria() {
 		return categoria;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_tipo_app")
 	public TipoApp getTipoApp() {
 		return tipoApp;
 	}
 	
-	@OneToMany(mappedBy="id_app")
+	@OneToMany(mappedBy="id_app",fetch=FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	public List<Version> getVersiones() {
 		return versiones;
 	}

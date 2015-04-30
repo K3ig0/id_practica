@@ -3,9 +3,11 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -35,7 +37,7 @@ public class Programador extends Usuario {
 		return numVotos;
 	}
 	
-	@OneToMany(mappedBy="autor")
+	@OneToMany(mappedBy="autor",fetch=FetchType.LAZY, cascade={CascadeType.PERSIST})
 	public List<App> getApps() {
 		return apps;
 	}

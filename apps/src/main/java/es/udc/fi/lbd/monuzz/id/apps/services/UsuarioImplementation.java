@@ -1,23 +1,46 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
-
-
-
+import es.udc.fi.lbd.monuzz.id.apps.daos.AppDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.UsuarioDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.VersionDAO;
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 import es.udc.fi.lbd.monuzz.id.apps.model.Version;
 
+@Service
 public class UsuarioImplementation implements UsuarioService {
 
-	@Override
+	static Logger log = Logger.getLogger("apps");
+	
+	@Autowired
+	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private AppDAO appDAO;
+	
+	@Autowired
+	private VersionDAO versionDAO;
+	
+	
+	@Transactional(value="miTransactionManager")
 	public void registrarNuevoUsuario(Usuario miUsuario) {
-		// TODO Auto-generated method stub
-		
+		try {
+			usuarioDAO.create(miUsuario);
+			log.info("UsuarioImplementation ==> Registrado el usuario: "+miUsuario.toString());
+		}
+		catch (DataAccessException e){
+			log.error("[Error]UsuarioImplementation ==> No se pudo registrar al usuario: "+miUsuario.toString());
+			throw e;
+		}
 	}
 
 	@Override

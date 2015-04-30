@@ -3,8 +3,10 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,13 +47,13 @@ public class Categoria {
 		return nombre;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_categoria_madre")
 	public Categoria getmadre() {
 		return madre;
 	}
 	
-	@OneToMany(mappedBy="madre")
+	@OneToMany(mappedBy="madre", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	public Set<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

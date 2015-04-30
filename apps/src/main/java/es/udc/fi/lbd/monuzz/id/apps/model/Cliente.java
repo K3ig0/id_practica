@@ -3,9 +3,11 @@ package es.udc.fi.lbd.monuzz.id.apps.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -45,7 +47,7 @@ public class Cliente extends Usuario {
 		return saldo;
 	}
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable (
 			name="CLI_APP",
 			joinColumns={@JoinColumn(name="id_app")},

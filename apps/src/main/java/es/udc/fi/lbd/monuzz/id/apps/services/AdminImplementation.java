@@ -1,13 +1,30 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import es.udc.fi.lbd.monuzz.id.apps.daos.AppDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.CategoriaDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.TipoAppDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.UsuarioDAO;
+import es.udc.fi.lbd.monuzz.id.apps.daos.VersionDAO;
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 
 public class AdminImplementation implements AdminService {
 
+	static Logger log = Logger.getLogger("apps");
+	
+	@Autowired
+	private TipoAppDAO tipoAppDAO;
+	
+	@Autowired
+	private CategoriaDAO categoriaDAO;
+	
+	
 	@Override
 	public void registrarNuevoTipoApp(TipoApp miTipo) {
 		// TODO Auto-generated method stub

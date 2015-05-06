@@ -1,19 +1,18 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
-import es.udc.fi.lbd.monuzz.id.apps.daos.AppDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.CategoriaDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.TipoAppDAO;
-import es.udc.fi.lbd.monuzz.id.apps.daos.UsuarioDAO;
-import es.udc.fi.lbd.monuzz.id.apps.daos.VersionDAO;
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
-
+@Service
 public class AdminImplementation implements AdminService {
 
 	static Logger log = Logger.getLogger("apps");
@@ -27,32 +26,67 @@ public class AdminImplementation implements AdminService {
 	
 	@Override
 	public void registrarNuevoTipoApp(TipoApp miTipo) {
-		// TODO Auto-generated method stub
-		
+		try {
+			tipoAppDAO.create(miTipo);
+			log.info("AdminImplementation ==> Registrado el tipo de app: "+miTipo.toString());
+		}
+		catch (DataAccessException e){
+			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app: "+miTipo.toString());
+			throw e;
+		}
 	}
 
 	@Override
 	public void borrarTipoApp(TipoApp miTipo) {
-		// TODO Auto-generated method stub
-		
+		try {
+			tipoAppDAO.remove(miTipo);
+			log.info("AdminImplementation ==> Borrado el tipo de app: "+miTipo.toString());
+		}
+		catch (DataAccessException e){
+			log.error("[Error]AdminImplementation ==> No se pudo borrar el tipo de app: "+miTipo.toString());
+			throw e;
+		}		
 	}
 
 	@Override
 	public TipoApp buscarTipoAppPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		TipoApp tipoApp;
+		try {
+			tipoApp= tipoAppDAO.findById(id);
+			log.info("AdminImplementation ==> Encontrado el tipo de app: "+tipoApp.toString());
+		}
+		catch (DataAccessException e){
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "+id);
+			throw e;
+		}	
+		return tipoApp;
 	}
 
 	@Override
 	public TipoApp buscarTipoAppPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		TipoApp tipoApp = null;
+		try {
+			tipoApp= tipoAppDAO.findByNombre(nombre);
+			log.info("AdminImplementation ==> Encontrado el tipo de app: "+tipoApp.toString());
+		}
+		catch (NullPointerException | DataAccessException e){
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el nombre: "+nombre);
+		}	
+		return tipoApp;
 	}
 
 	@Override
 	public List<TipoApp> buscarTodosTipoApp() {
-		// TODO Auto-generated method stub
-		return null;
+		List<TipoApp> tipoApps;
+		try {
+			tipoApps= tipoAppDAO.findAll();
+			log.info("AdminImplementation ==> Recuperada a lista de tipos de app correctamente");
+		}
+		catch (DataAccessException e){
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar ningún tipo de app");
+			throw e;
+		}	
+		return tipoApps;
 	}
 
 	@Override

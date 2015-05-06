@@ -60,7 +60,7 @@ public class TestUtils {
 		adminService.registrarNuevoTipoApp(tipoPayware);
 
 		
-		/* Insertamos categorias principales. Asumimos propagacion activada en mappings para el resto */
+		/* Insertamos categorias principales. Asumimos propagacion activada en mappings para el resto *//*
 
 		cat1  = new Categoria("Categoria 1");
 		cat11 = new Categoria("Categoria 1.1");
@@ -78,7 +78,7 @@ public class TestUtils {
 		adminService.registrarNuevaCategoria(cat1);
 		adminService.registrarNuevaCategoria(cat2);
 		
-		/* Insertamos programadores, inicialmente sin aplicaciones */
+		/* Insertamos programadores, inicialmente sin aplicaciones *//*
 	
 		programador1 = new Programador("monuzz", "monuzz13", "Mon", "López", "Rodríguez", "Mon López");
 		programador2 = new Programador("mi", "mi13", "Miguel", "Rodríguez", "Penabad", "Miguel Penabad");
@@ -86,7 +86,7 @@ public class TestUtils {
 		usuarioService.registrarNuevoUsuario(programador1);
 		usuarioService.registrarNuevoUsuario(programador2);
 
-		/* Insertamos aplicaciones con sus versiones iniciales. Solo se insertan las apps: asumimos propagación activada para las versiones */
+		/* Insertamos aplicaciones con sus versiones iniciales. Solo se insertan las apps: asumimos propagación activada para las versiones *//*
 		
 		app1 = new App("App1", new Timestamp(Calendar.getInstance().getTimeInMillis()), new Float(0.95), programador1, cat11, tipoPayware);
 		try { Thread.sleep(timeout); } catch (InterruptedException e) {}
@@ -118,7 +118,7 @@ public class TestUtils {
 		usuarioService.registrarApp(app3);
 		usuarioService.registrarApp(app4);
 
-		/* Registramos clientes */ 
+		/* Registramos clientes */ /*
 
 		cliente1 = new Cliente ("cmonuzz", "monuzz13", "Climon", "López", "Rodríguez", "Climon López", "Premium", new Float(1000));
 		cliente2 = new Cliente ("cmi", "mi13", "Climiguel", "Rodríguez", "Penabad", "Climiguel Penabad", "Normalillo", new Float(30));
@@ -128,11 +128,11 @@ public class TestUtils {
 		usuarioService.registrarNuevoUsuario(cliente1);
 		usuarioService.registrarNuevoUsuario(cliente2);
 		
-	}
+	*/}
 	
 	public void eliminaSetDatosPrueba() {
 
-
+/*
 		
 
 		usuarioService.cancelarClientes(app1);
@@ -153,15 +153,15 @@ public class TestUtils {
 		usuarioService.borrarUsuario(programador1);
 		usuarioService.borrarUsuario(programador2);
 
-
+*/
 		adminService.borrarTipoApp(tipoFreeware);
 		adminService.borrarTipoApp(tipoShareware);
 		adminService.borrarTipoApp(tipoPayware); 
 		
-		/* Borramos categorías principales. Asumimos propagación del borrado para el resto */		
+		/* Borramos categorías principales. Asumimos propagación del borrado para el resto */		/*
 	
 		adminService.borrarCategoria(cat1);
 		adminService.borrarCategoria(cat2);
 		
-	}
+	*/}
 }

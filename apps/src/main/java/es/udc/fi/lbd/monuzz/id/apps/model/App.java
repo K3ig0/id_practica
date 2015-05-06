@@ -87,7 +87,7 @@ public class App  {
 		return tipoApp;
 	}
 	
-	@OneToMany(mappedBy="id_app",fetch=FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy="app",fetch=FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	public List<Version> getVersiones() {
 		return versiones;
 	}

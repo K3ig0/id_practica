@@ -2,38 +2,56 @@ package es.udc.fi.lbd.monuzz.id.apps.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 
+@Repository
 public class TipoAppDAOImplementation implements TipoAppDAO {
 
-	@Override
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Transactional(value="miTransactionManager")
 	public Long create(TipoApp miTipo) {
-		// TODO Auto-generated method stub
-		return null;
+		Long id;
+		if (miTipo.getIdTipoApp()!=null){
+			throw new RuntimeException("TipoApp ya existente");
+		}
+		id = (Long) sessionFactory.getCurrentSession().save(miTipo);
+		return id;
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public void remove(TipoApp miTipo) {
-		// TODO Auto-generated method stub
-		
+		if (miTipo.getIdTipoApp()==null){
+			throw new RuntimeException("TipoApp non existente");
+		}
+		sessionFactory.getCurrentSession().delete(miTipo);		
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public TipoApp findById(Long Id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return (TipoApp) sessionFactory.getCurrentSession().get(TipoApp.class, Id);
+
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public TipoApp findByNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + TipoApp.class.getName() + " where nombre=:nombre");
+		q.setString("nombre",nombre);
+		return (TipoApp) q.uniqueResult();
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public List<TipoApp> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery( "from " + TipoApp.class.getName()).list();
+
 	}
 
 }

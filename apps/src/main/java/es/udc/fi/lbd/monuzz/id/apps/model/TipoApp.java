@@ -37,7 +37,7 @@ public class TipoApp {
 		return idTipoApp;
 	}
 	
-	@Column (name="nombre", nullable=false, unique=false)
+	@Column (name="nombre", nullable=false, unique=true)
 	public String getNombre() {
 		return nombre;
 	}
@@ -47,7 +47,7 @@ public class TipoApp {
 		return descripcion;
 	}
 	
-	@Column (name="icono", nullable=false, unique=false)
+	@Column (name="icono", nullable=true, unique=false)
 	public byte[] getIcono() {
 		return icono;
 	}

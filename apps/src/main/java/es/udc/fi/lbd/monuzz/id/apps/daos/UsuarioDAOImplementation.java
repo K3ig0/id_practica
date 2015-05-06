@@ -2,9 +2,11 @@ package es.udc.fi.lbd.monuzz.id.apps.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
@@ -16,7 +18,7 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Override
+	@Transactional(value="miTransactionManager")
 	public Long create(Usuario miUsuario) {
 		Long id;
 		if (miUsuario.getIdUsuario()!=null){
@@ -26,15 +28,15 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 		return id;
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public void remove(Usuario miUsuario) {
-		if (miUsuario.getIdUsuario()!=null){
+		if (miUsuario.getIdUsuario()==null){
 			throw new RuntimeException("Usuario non existente");
 		}
-		sessionFactory.getCurrentSession().delete(miUsuario);	
+		sessionFactory.getCurrentSession().delete(miUsuario);
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public void update(Usuario miUsuario) {
 		if (miUsuario.getIdUsuario()!=null){
 			throw new RuntimeException("Usuario non existente");
@@ -42,31 +44,33 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 		sessionFactory.getCurrentSession().save(miUsuario);	
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public Usuario findById(Long id) {
 		
 		return (Usuario) sessionFactory.getCurrentSession().get(Usuario.class, id);
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public Usuario findByNombreDeUsuario(String nombreDeUsuario) {
 
-		return (Usuario) sessionFactory.getCurrentSession().get(Usuario.class, nombreDeUsuario);
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + Usuario.class.getName() + " where usuario=?");
+		q.setParameter(1,nombreDeUsuario);
+		return (Usuario) q.uniqueResult();
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public List<Usuario> findAll() {
 		
 		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName()).list();
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public List<Cliente> findAllClientes() {
 
 		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName() + " where TIPO_USUARIO='CLI'").list();
 	}
 
-	@Override
+	@Transactional(value="miTransactionManager")
 	public List<Programador> findAllProgramadores() {
 
 		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName() + " where TIPO_USUARIO='PRO'").list();

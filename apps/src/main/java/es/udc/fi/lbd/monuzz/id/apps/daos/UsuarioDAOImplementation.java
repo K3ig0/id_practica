@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
+import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 
 @Repository
@@ -31,15 +32,15 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	@Transactional(value="miTransactionManager")
 	public void remove(Usuario miUsuario) {
 		if (miUsuario.getIdUsuario()==null){
-			throw new RuntimeException("Usuario non existente");
+			throw new RuntimeException("Usuario no existente");
 		}
 		sessionFactory.getCurrentSession().delete(miUsuario);
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void update(Usuario miUsuario) {
-		if (miUsuario.getIdUsuario()!=null){
-			throw new RuntimeException("Usuario non existente");
+		if (miUsuario.getIdUsuario()==null){
+			throw new RuntimeException("Usuario no existente");
 		}
 		sessionFactory.getCurrentSession().save(miUsuario);	
 	}
@@ -53,8 +54,8 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	@Transactional(value="miTransactionManager")
 	public Usuario findByNombreDeUsuario(String nombreDeUsuario) {
 
-		Query q = sessionFactory.getCurrentSession().createQuery("from " + Usuario.class.getName() + " where usuario=?");
-		q.setParameter(1,nombreDeUsuario);
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + Usuario.class.getName() + " where usuario=:nombreDeUsuario");
+		q.setString("nombreDeUsuario",nombreDeUsuario);
 		return (Usuario) q.uniqueResult();
 	}
 

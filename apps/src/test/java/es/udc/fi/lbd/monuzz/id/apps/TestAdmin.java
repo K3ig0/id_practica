@@ -92,7 +92,7 @@ public class TestAdmin {
 		adminService.borrarTipoApp(miTipoApp);
 		assertNull (adminService.buscarTipoAppPorId(miTipoApp.getIdTipoApp()));
 		assertNull (adminService.buscarTipoAppPorNombre(miTipoApp.getNombre()));
-	}
+	*/}
 
 	@Test
 	public void testCategoria() {
@@ -118,7 +118,7 @@ public class TestAdmin {
 		assertNotNull(adminService.buscarCategoriaPorNombre(catA1.getNombre()));
 		assertNotNull(adminService.buscarCategoriaPorNombre(catA2.getNombre()));
 
-		
+		/*
 		// T2. Creamos categoria ya existente, y detectamos duplicidad del nombre
 		
 		Categoria catANueva = new Categoria("Categoria A"); 

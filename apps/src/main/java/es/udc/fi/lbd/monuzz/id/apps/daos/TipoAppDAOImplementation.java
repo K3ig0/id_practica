@@ -29,7 +29,7 @@ public class TipoAppDAOImplementation implements TipoAppDAO {
 	@Transactional(value="miTransactionManager")
 	public void remove(TipoApp miTipo) {
 		if (miTipo.getIdTipoApp()==null){
-			throw new RuntimeException("TipoApp non existente");
+			throw new RuntimeException("TipoApp no existente");
 		}
 		sessionFactory.getCurrentSession().delete(miTipo);		
 	}

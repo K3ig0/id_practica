@@ -40,7 +40,7 @@ public class UsuarioImplementation implements UsuarioService {
 				log.info("[Info]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> Registrado el usuario: "
 						+ miUsuario.toString());
 			} else
-				log.info("[Info]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> usuario = null");
+				log.error("[Error]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> usuario = null");
 		} catch (DataAccessException e) {
 			log.error("[Error]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> No se pudo registrar el usuario");
 			throw e;
@@ -54,7 +54,7 @@ public class UsuarioImplementation implements UsuarioService {
 				log.info("[Info]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> Actualizado el usuario: "
 						+ miUsuario.toString());
 			} else
-				log.info("[Info]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> usuario = null");
+				log.error("[Error]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> usuario = null");
 		} catch (DataAccessException e) {
 			log.error("[Error]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> No se pudo actualizar el usuario");
 			throw e;
@@ -68,7 +68,7 @@ public class UsuarioImplementation implements UsuarioService {
 				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> Borrado el usuario: "
 						+ miUsuario.toString());
 			} else
-				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> usuario = null");
+				log.error("[Error]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> usuario = null");
 		} catch (DataAccessException e) {
 			log.error("[Error]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> No se pudo borrar el usuario");
 			throw e;
@@ -91,7 +91,7 @@ public class UsuarioImplementation implements UsuarioService {
 					log.info("[Info]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> Encontrado el usuario: "
 							+ usuario.toString());
 			} else
-				log.info("[Info]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> id = null");
+				log.error("[Error]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> id = null");
 
 		} catch (DataAccessException e) {
 			log.error("[Error]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> No se pudo encontrar el usuario con el id: "
@@ -125,7 +125,7 @@ public class UsuarioImplementation implements UsuarioService {
 					log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> Encontrado el usuario: "
 							+ usuario.toString());
 			} else
-				log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> login = null");
+				log.error("[Error]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> login = null");
 
 		} catch (DataAccessException e) {
 			log.error("[Error]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> No se pudo encontrar el usuario con el login: "

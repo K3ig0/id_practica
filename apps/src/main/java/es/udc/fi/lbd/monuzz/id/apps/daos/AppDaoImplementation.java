@@ -22,8 +22,7 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public Long create(App miApp) {
-		Long id;
-		id = (Long) sessionFactory.getCurrentSession().save(miApp);
+		Long id = (Long) sessionFactory.getCurrentSession().save(miApp);
 		return id;
 	}
 
@@ -44,20 +43,21 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public App findByTitulo(String miTitulo) {
-		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where id_tipo_app=:titulo");
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where titulo=:titulo");
 		q.setString("titulo",miTitulo);
 		return (App) q.uniqueResult();
 	}
 
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByProgramador(Programador miProgramador) {
-		return sessionFactory.getCurrentSession().createQuery( "from " + App.class.getName() + " where id_usuario="+miProgramador.getIdUsuario()).list();
+		
+		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where id_programador="+miProgramador.getIdUsuario()).list();
 	}
 
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
-		// TODO Auto-generated method stub
-		return null;
+		//POSIBLEMENTE DEVUELVE 2 COLUMNAS DE MÁS DE LA TABLA DEL JOIN Y NO PUEDA CONVERTIR
+		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a join cli_app r on a.id_app=r.id_app where id_usuario="+miCliente.getIdUsuario()).list();
 	}
 
 	@Transactional(value = "miTransactionManager")

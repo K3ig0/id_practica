@@ -239,10 +239,10 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarAppPorId(miApp.getIdApp()));
 		assertNull(usuarioService.buscarAppPorTitulo(miApp.getTitulo()));
 		assertNull(usuarioService.BuscarVersionPorId(miVersion.getIdVersion()));
-		*/
-	}
+		
+	}*/
 
 		
 
 
-//}
+}

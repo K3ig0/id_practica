@@ -22,27 +22,19 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	
 	@Transactional(value="miTransactionManager")
 	public Long create(Usuario miUsuario) {
-		Long id;
-		/*if (miUsuario.getIdUsuario()!=null){
-			throw new DataIntegrityViolationException("Usuario ya existente");
-		}*/
-		id = (Long) sessionFactory.getCurrentSession().save(miUsuario);
+		Long id = (Long) sessionFactory.getCurrentSession().save(miUsuario);
 		return id;
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void remove(Usuario miUsuario) {
-		/*if (miUsuario.getIdUsuario()==null){
-			throw new RuntimeException("Usuario no existente");
-		}*/
+
 		sessionFactory.getCurrentSession().delete(miUsuario);
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void update(Usuario miUsuario) {
-		/*if (miUsuario.getIdUsuario()==null){
-			throw new RuntimeException("Usuario no existente");
-		}*/
+
 		sessionFactory.getCurrentSession().update(miUsuario);
 	}
 

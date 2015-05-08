@@ -5,18 +5,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.daos.AppDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.UsuarioDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.VersionDAO;
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
-import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
-import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 import es.udc.fi.lbd.monuzz.id.apps.model.Version;
 
@@ -65,9 +61,10 @@ public class UsuarioImplementation implements UsuarioService {
 	public void borrarUsuario(Usuario miUsuario) {
 		try {
 			if (miUsuario != null) {
+				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> Borrando el usuario: "
+						+ miUsuario.toString() + " ...");
 				usuarioDAO.remove(miUsuario);
-				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> Borrado el usuario: "
-						+ miUsuario.toString());
+				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> ...Usuario borrado satisfactoriamente");
 			} else
 				log.error("[Error]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> usuario = null");
 		} catch (DataAccessException e) {
@@ -88,7 +85,7 @@ public class UsuarioImplementation implements UsuarioService {
 				// pass incorrecto
 				log.error("[Error]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Datos de acceso incorrectos");
 		}
-		return null;
+		return null; //solo devuelve el usuario si su password es correcto
 	}
 
 	public Usuario buscarUsuarioPorId(Long id) {
@@ -121,9 +118,11 @@ public class UsuarioImplementation implements UsuarioService {
 				if (usuario == null)
 					log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin((<Long> login)] ==> No se ha encontrado al usuario con el login: "
 							+ login);
-				else
+				else {
 					log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> Encontrado el usuario: "
 							+ usuario.toString());
+					return usuario;
+				}
 			} else
 				log.error("[Error]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> login = null");
 
@@ -175,12 +174,12 @@ public class UsuarioImplementation implements UsuarioService {
 		try {
 			if (miApp != null) {
 				appDAO.create(miApp);
-				log.info("[Info]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> Registrada la aplicación: "
+				log.info("[Info]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> Registrada la app: "
 						+ miApp.toString());
 			} else
 				log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> app = null");
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> No se pudo registrar la aplicación");
+			log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> No se pudo registrar la app");
 			throw e;
 		}
 	}
@@ -189,7 +188,7 @@ public class UsuarioImplementation implements UsuarioService {
 		try {
 			if (miApp != null) {
 				appDAO.update(miApp);
-				log.info("[Info]UsuarioImplementation[actualizarApp(<Clase> App)] ==> Actualizada la aplicación: "
+				log.info("[Info]UsuarioImplementation[actualizarApp(<Clase> App)] ==> Actualizada la app: "
 						+ miApp.toString());
 			} else
 				log.error("[Error]UsuarioImplementation[actualizarApp(<Clase> App)] ==> app = null");
@@ -202,13 +201,14 @@ public class UsuarioImplementation implements UsuarioService {
 	public void borrarApp(App miApp) {
 		try {
 			if (miApp != null) {
+				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrando la app: "
+						+ miApp.toString() + " ...");
 				appDAO.remove(miApp);
-				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrada la aplicación: "
-						+ miApp.toString());
+				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> ...App borrada satisfactoriamente");
 			} else
 				log.error("[Error]UsuarioImplementation[borrarApp(<Clase> App)] ==> app = null");
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation[borrarApp(<Clase> App)] ==> No se pudo borrar la aplicación");
+			log.error("[Error]UsuarioImplementation[borrarApp(<Clase> App)] ==> No se pudo borrar la app");
 			throw e;
 		}
 	}
@@ -219,16 +219,16 @@ public class UsuarioImplementation implements UsuarioService {
 			if (id != null) {
 				app = appDAO.findById(id);
 				if (app == null)
-					log.info("[Info]UsuarioImplementation[buscarAppPorId((<Long> id)] ==> No se ha encontrado la aplicación con id: "
+					log.info("[Info]UsuarioImplementation[buscarAppPorId((<Long> id)] ==> No se ha encontrado la app con id: "
 							+ id);
 				else
-					log.info("[Info]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> Encontrada la aplicación: "
+					log.info("[Info]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> Encontrada la app: "
 							+ app.toString());
 			} else
 				log.error("[Error]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> id = null");
 
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> No se pudo encontrar la aplicación con id: "
+			log.error("[Error]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> No se pudo encontrar la app con id: "
 					+ id);
 			throw e;
 		}
@@ -241,16 +241,16 @@ public class UsuarioImplementation implements UsuarioService {
 			if (miTitulo != null) {
 				app = appDAO.findByTitulo(miTitulo);
 				if (app == null)
-					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo((<Long> miTitulo)] ==> No se ha encontrado ninguna aplicación con el título: "
+					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo((<Long> miTitulo)] ==> No se ha encontrado ninguna app con el título: "
 							+ miTitulo);
 				else
-					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> Encontrada la aplicación: "
+					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> Encontrada la app: "
 							+ app.toString());
 			} else
 				log.error("[Error]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> miTitulo = null");
 
 		} catch (DataAccessException e) {
-			log.error("[Error]AppImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> No se pudo encontrar la aplicación con el título: "
+			log.error("[Error]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> No se pudo encontrar la app con el título: "
 					+ miTitulo);
 			throw e;
 		}
@@ -258,43 +258,111 @@ public class UsuarioImplementation implements UsuarioService {
 	}
 
 	public List<App> obtenerAppsProgramador(Programador miProgramador) {
-		// TODO Auto-generated method stub
-		return null;
+		List<App> apps = null;
+		if (miProgramador != null) {
+			apps = miProgramador.getApps();
+			log.info("[Info]UsuarioImplementation[obtenerAppsProgramador(<Class> Programador)] ==> Recuperada correctamente la lista de apps del programador: "+miProgramador.toString());
+			return apps;
+		}
+		log.error("[Error]UsuarioImplementation[obtenerAppsProgramador(<Class> Programador)] ==> miProgramador = null");
+		return apps;
 	}
 
 	public List<App> obtenerAppsCliente(Cliente miCliente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<App> apps = null;
+		if (miCliente != null) {
+			apps = miCliente.getApps();
+			log.info("[Info]UsuarioImplementation[obtenerAppsCliente(<Class> Cliente)] ==> Recuperada correctamente la lista de appps del cliente: "+miCliente.toString());
+			return apps;
+		}
+		log.error("[Error]UsuarioImplementation[obtenerAppsCliente(<Class> Cliente)] ==> miCliente = null");
+		return apps;
 	}
 
 	public List<Cliente> obtenerClientesApp(App miApp) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> clientes = null;
+		/*if (miApp != null) {
+			Long id_app = miApp.getIdApp(); //necesario para consultar en la tabla N:M clientes-apps
+			clientes = QUERY
+			log.info("[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Recuperada correctamente la lista de clientes para la app: "+miApp.toString());
+			return clientes;
+		}
+		log.error("[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> No se pudo encontrar ningún cliente ligado a la app solicitada");
+		*/
+		return clientes;
 	}
 
 	public void cancelarClientes(App miApp) {
-		// TODO Auto-generated method stub
-
+		if (miApp != null) {
+			Long id_app = miApp.getIdApp(); //necesario para consultar en la tabla N:M clientes-apps
+			//clientes = appDAO.findAllClientes(miApp);
+			//quitar la app de la lista del usuario con SetApps, luego hacer usuarioDAO.update() y lanzar un remove de que dicho usuario ya no está ligado a dicha app en cli_app
+			// TODO 
+			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Cancelados los clientes de la app: "+miApp.toString());
+		}
+		log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
 	}
 
 	public void registrarNuevaVersion(Version miVersion) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miVersion != null) {
+				versionDAO.create(miVersion);
+				log.info("[Info]UsuarioImplementation[registrarNuevaVersion(<Clase> Version)] ==> Registrada la versión: "
+						+ miVersion.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[registrarNuevaVersion(<Clase> Version)] ==> version = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]VUsuarioImplementation[registrarNuevaVersion(<Clase> Version)] ==> No se pudo registrar la versión");
+			throw e;
+		}
 	}
 
 	public void borrarVersion(Version miVersion) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miVersion != null) {
+				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> Borrando la versión: "
+						+ miVersion.toString() + " ...");
+				versionDAO.remove(miVersion);
+				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> ...Versión borrada satisfactoriamente");
+			} else
+				log.error("[Error]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> version = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> No se pudo registrar la versión");
+			throw e;
+		}
 	}
 
-	public Version BuscarVersionPorId(Long Id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Version BuscarVersionPorId(Long id) {
+		Version version = null;
+		try {
+			if (id != null) {
+				version = versionDAO.findById(id);
+				if (version == null)
+					log.info("[Info]UsuarioImplementation[buscarVersionPorId((<Long> id)] ==> No se ha encontrado la versión con id: "
+							+ id);
+				else
+					log.info("[Info]UsuarioImplementation[buscarVersionPorId(<Long> id)] ==> Encontrada la versión: "
+							+ version.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[buscarVersionPorId(<Long> id)] ==> id = null");
+
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[buscarVersionPorId(<Long> id)] ==> No se pudo encontrar la versión con id: "
+					+ id);
+			throw e;
+		}
+		return version;
 	}
 
 	public List<Version> obtenerListaVersiones(App miApp) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Version> versiones = null;
+		if (miApp != null) {
+			versiones = miApp.getVersiones();
+			log.info("[Info]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> Recuperada correctamente la lista de versiones del cliente: "+miApp.toString());
+			return versiones;
+		}
+		log.error("[Error]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> miApp = null");
+		return versiones;
 	}
 
 	public Version obtenerUltimaVersion(App miApp) {

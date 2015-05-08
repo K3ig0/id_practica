@@ -70,7 +70,7 @@ public class App  {
 	}
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_usuario")
+	@JoinColumn(name="id_programador")
 	public Programador getAutor() {
 		return autor;
 	}

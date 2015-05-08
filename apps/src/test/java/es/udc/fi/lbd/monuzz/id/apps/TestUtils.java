@@ -98,8 +98,8 @@ public class TestUtils {
 
 		usuarioService.registrarNuevoUsuario(programador1);
 		usuarioService.registrarNuevoUsuario(programador2);
-/*
-		/* Insertamos aplicaciones con sus versiones iniciales. Solo se insertan las apps: asumimos propagación activada para las versiones *//*
+
+		/* Insertamos aplicaciones con sus versiones iniciales. Solo se insertan las apps: asumimos propagación activada para las versiones */
 		
 		app1 = new App("App1", new Timestamp(Calendar.getInstance().getTimeInMillis()), new Float(0.95), programador1, cat11, tipoPayware);
 		try { Thread.sleep(timeout); } catch (InterruptedException e) {}
@@ -130,7 +130,7 @@ public class TestUtils {
 		usuarioService.registrarApp(app2);
 		usuarioService.registrarApp(app3);
 		usuarioService.registrarApp(app4);
-*/
+
 		/* Registramos clientes */ 
 
 		cliente1 = new Cliente ("cmonuzz", "monuzz13", "Climon", "López", "Rodríguez", "Climon López", "Premium", new Float(1000));
@@ -152,14 +152,14 @@ public class TestUtils {
 		usuarioService.cancelarClientes(app2);
 		usuarioService.cancelarClientes(app3);
 		usuarioService.cancelarClientes(app4);
-
+*/
 		// Borramos Apps. Asumimos versiones borradas por propagacion
 
 		usuarioService.borrarApp(app1);
 		usuarioService.borrarApp(app2);
 		usuarioService.borrarApp(app3);
 		usuarioService.borrarApp(app4);
-*/
+
 		usuarioService.borrarUsuario(cliente1);
 		usuarioService.borrarUsuario(cliente2);
 	

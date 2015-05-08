@@ -42,9 +42,10 @@ public class AdminImplementation implements AdminService {
 	public void borrarTipoApp(TipoApp miTipo) {
 		try {
 			if (miTipo != null) {
-				tipoAppDAO.remove(miTipo);
-				log.info("[Info]AdminImplementation[borrarTipoApp(<Clase> TipoApp)] ==> Borrado el tipo de app: "
+				log.info("[Info]AdminImplementation[borrarTipoApp(<Clase> TipoApp)] ==> Borrando el tipo de app: "
 						+ miTipo.toString());
+				tipoAppDAO.remove(miTipo);
+				log.info("[Info]AdminImplementation[borrarTipoApp(<Clase> TipoApp)] ==> ...Tipo de app borrada satisfactoriamente");
 			} else
 				log.error("[Error]AdminImplementation[borrarTipoApp(<Clase> TipoApp)] ==> tipoApp = null");
 		} catch (DataAccessException e) {
@@ -146,9 +147,10 @@ public class AdminImplementation implements AdminService {
 	public void borrarCategoria(Categoria miCategoria) {
 		try {
 			if (miCategoria != null) {
+				log.info("[Info]AdminImplementation[borrarCategoria(<Clase> categoria)] ==> Borrando la categoría: "
+						+ miCategoria.toString() + "y sus subcategorías ...");
 				categoriaDAO.remove(miCategoria);
-				log.info("[Info]AdminImplementation[borrarCategoria(<Clase> categoria)] ==> Borrada la categoría: "
-						+ miCategoria.toString() + "y sus subcategorías");
+				log.info("[Info]AdminImplementation[borrarCategoria(<Clase> categoria)] ==> ... Categoría borrada satisfactoriamente");
 			} else
 				log.error("[Error]AdminImplementation[borrarCategoria(<Clase> categoria)] ==> categoria = null");
 		} catch (DataAccessException e) {

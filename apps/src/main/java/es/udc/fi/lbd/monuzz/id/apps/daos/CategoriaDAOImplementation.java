@@ -21,43 +21,30 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	
 	@Transactional(value="miTransactionManager")
 	public Long create(Categoria miCategoria) {
-		Long id;
-		/*if (miCategoria.getIdCategoria()!=null){
-			throw new RuntimeException("Categoría ya existente");
-		}*/
-		id = (Long) sessionFactory.getCurrentSession().save(miCategoria);
+		Long id = (Long) sessionFactory.getCurrentSession().save(miCategoria);
 		return id;
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void remove(Categoria miCategoria) {
-		/*if (miCategoria.getIdCategoria()==null){
-			throw new RuntimeException("Categoría no existente");
-		}*/
+
 		sessionFactory.getCurrentSession().delete(miCategoria);				
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void update(Categoria miCategoria) {
-		/*if (miCategoria.getIdCategoria()==null){
-			throw new RuntimeException("Categoría no existente");
-		}*/
+
 		sessionFactory.getCurrentSession().save(miCategoria);			
 	}
 
 	@Transactional(value="miTransactionManager")
 	public Categoria findById(Long idCategoria) {
-		/*if (idCategoria==null){
-			throw new RuntimeException("Categoría no existente");
-		}*/
+
 		return (Categoria) sessionFactory.getCurrentSession().get(Categoria.class, idCategoria);
 	}
 
 	@Transactional(value="miTransactionManager")
 	public Categoria findByNombre(String nombreCategoria) {
-		/*if (nombreCategoria==null){
-			throw new RuntimeException("Categoría no existente");
-		}*/
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where nombre=:nombreCategoria");
 		q.setString("nombreCategoria",nombreCategoria);
 		return (Categoria) q.uniqueResult();
@@ -71,9 +58,6 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
-		/*if (miCategoria==null){
-			throw new RuntimeException("Categoría no existente");
-		}*/
 		Long id=miCategoria.getIdCategoria();
 		String q_str = 
 				"with recursive rcat as ( "+

@@ -1,4 +1,5 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -22,55 +23,56 @@ import es.udc.fi.lbd.monuzz.id.apps.model.Version;
 public class UsuarioImplementation implements UsuarioService {
 
 	static Logger log = Logger.getLogger("apps");
-	
+
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-	
+
 	@Autowired
 	private AppDAO appDAO;
-	
+
 	@Autowired
 	private VersionDAO versionDAO;
-	
-	
+
 	public void registrarNuevoUsuario(Usuario miUsuario) {
 		try {
-			usuarioDAO.create(miUsuario);
-			log.info("UsuarioImplementation ==> Registrado el usuario: "+miUsuario.toString());
-		}
-		catch (DataAccessException e){
-			log.error("[Error]UsuarioImplementation ==> No se pudo registrar el usuario: "+miUsuario.toString());
+			if (miUsuario != null) {
+				usuarioDAO.create(miUsuario);
+				log.info("[Info]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> Registrado el usuario: "
+						+ miUsuario.toString());
+			} else
+				log.info("[Info]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> usuario = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[registrarNuevoUsuario(<Clase> Usuario)] ==> No se pudo registrar el usuario");
 			throw e;
-		}	
-		catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]UsuarioImplementation ==> No se pudo registrar al usuario");
 		}
 	}
 
 	public void actualizarUsuario(Usuario miUsuario) {
 		try {
-			usuarioDAO.update(miUsuario);
-			log.info("UsuarioImplementation ==> Actualizado el usuario: "+miUsuario.toString());
-		}
-		catch (DataAccessException e){
-			log.error("[Error]UsuarioImplementation ==> No se pudo actualizar el usuario: "+miUsuario.toString());
+			if (miUsuario != null) {
+				usuarioDAO.update(miUsuario);
+				log.info("[Info]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> Actualizado el usuario: "
+						+ miUsuario.toString());
+			} else
+				log.info("[Info]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> usuario = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[actualizarUsuario(<Clase> Usuario)] ==> No se pudo actualizar el usuario");
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]UsuarioImplementation ==> No se pudo actualizar al usuario");
-		}		
+		}
 	}
 
 	public void borrarUsuario(Usuario miUsuario) {
 		try {
-			usuarioDAO.remove(miUsuario);
-			log.info("UsuarioImplementation ==> Borrado el usuario: "+miUsuario.toString());
-		}
-		catch (DataAccessException e){
-			log.error("[Error]UsuarioImplementation ==> No se pudo borrar el usuario: "+miUsuario.toString());
+			if (miUsuario != null) {
+				usuarioDAO.remove(miUsuario);
+				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> Borrado el usuario: "
+						+ miUsuario.toString());
+			} else
+				log.info("[Info]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> usuario = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[borrarUsuario(<Clase> Usuario)] ==> No se pudo borrar el usuario");
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]UsuarioImplementation ==> No se pudo borrar al usuario");
-		}			
+		}
 	}
 
 	public Usuario autenticarUsuario(String login, String password) {
@@ -80,35 +82,55 @@ public class UsuarioImplementation implements UsuarioService {
 	public Usuario buscarUsuarioPorId(Long id) {
 		Usuario usuario = null;
 		try {
-			usuario = usuarioDAO.findById(id);
-			log.info("UsuarioImplementation ==> Encontrado al usuario: "
-					+ usuario.toString());
+			if (id != null) {
+				usuario = usuarioDAO.findById(id);
+				if (usuario == null)
+					log.info("[Info]UsuarioImplementation[buscarUsuarioPorId((<Long> id)] ==> No se ha encontrado al usuario con el id: "
+							+ id);
+				else
+					log.info("[Info]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> Encontrado el usuario: "
+							+ usuario.toString());
+			} else
+				log.info("[Info]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> id = null");
 
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation ==> No se pudo encontrar el usuario con el id: "
+			log.error("[Error]UsuarioImplementation[buscarUsuarioPorId(<Long> id)] ==> No se pudo encontrar el usuario con el id: "
 					+ id);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]Usuarioplementation ==> No se pudo encontrar el usuario con el id: "
-					+ id);
 		}
 		return usuario;
 	}
 
 	public Usuario buscarUsuarioPorLogin(String login) {
 		Usuario usuario = null;
+		/*
+		 * try { usuario = usuarioDAO.findByNombreDeUsuario(login);
+		 * log.info("UsuarioImplementation ==> Encontrado al usuario: " +
+		 * usuario.toString());
+		 * 
+		 * } catch (DataAccessException e) { log.error(
+		 * "[Error]UsuarioImplementation ==> No se pudo encontrar el usuario con el login: "
+		 * + login); throw e; } catch (RuntimeException e) { // se lanza en el
+		 * DAO si es nulo log.error(
+		 * "[Error]Usuarioplementation ==> No se pudo encontrar el usuario con el login: "
+		 * + login); } return usuario;
+		 */
 		try {
-			usuario = usuarioDAO.findByNombreDeUsuario(login);
-			log.info("UsuarioImplementation ==> Encontrado al usuario: "
-					+ usuario.toString());
+			if (login != null) {
+				usuario = usuarioDAO.findByNombreDeUsuario(login);
+				if (usuario == null)
+					log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin((<Long> login)] ==> No se ha encontrado al usuario con el login: "
+							+ login);
+				else
+					log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> Encontrado el usuario: "
+							+ usuario.toString());
+			} else
+				log.info("[Info]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> login = null");
 
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation ==> No se pudo encontrar el usuario con el login: "
+			log.error("[Error]UsuarioImplementation[buscarUsuarioPorLogin(<Long> login)] ==> No se pudo encontrar el usuario con el login: "
 					+ login);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]Usuarioplementation ==> No se pudo encontrar el usuario con el login: "
-					+ login);
 		}
 		return usuario;
 	}
@@ -130,17 +152,17 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public void registrarApp(App miApp) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void actualizarApp(App miApp) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void borrarApp(App miApp) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public App buscarAppPorId(Long id) {
@@ -170,17 +192,17 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public void cancelarClientes(App miApp) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void registrarNuevaVersion(Version miVersion) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void borrarVersion(Version miVersion) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Version BuscarVersionPorId(Long Id) {
@@ -197,5 +219,5 @@ public class UsuarioImplementation implements UsuarioService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-		
+
 }

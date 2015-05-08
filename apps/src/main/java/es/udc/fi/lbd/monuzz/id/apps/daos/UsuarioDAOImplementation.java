@@ -32,17 +32,17 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 
 	@Transactional(value="miTransactionManager")
 	public void remove(Usuario miUsuario) {
-		if (miUsuario.getIdUsuario()==null){
+		/*if (miUsuario.getIdUsuario()==null){
 			throw new RuntimeException("Usuario no existente");
-		}
+		}*/
 		sessionFactory.getCurrentSession().delete(miUsuario);
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void update(Usuario miUsuario) {
-		if (miUsuario.getIdUsuario()==null){
+		/*if (miUsuario.getIdUsuario()==null){
 			throw new RuntimeException("Usuario no existente");
-		}
+		}*/
 		sessionFactory.getCurrentSession().update(miUsuario);
 	}
 

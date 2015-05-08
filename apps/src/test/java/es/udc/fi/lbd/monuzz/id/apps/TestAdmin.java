@@ -128,9 +128,7 @@ public class TestAdmin {
 		Boolean duplicado=false;
 		try {adminService.registrarNuevaCategoria(catANueva);} catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);		
-		System.out.println(catA1Nueva.getIdCategoria());
 		assertNull(adminService.buscarCategoriaPorId(catANueva.getIdCategoria()));
-		System.out.println(catA1Nueva.getIdCategoria());
 		assertNull(adminService.buscarCategoriaPorId(catA1Nueva.getIdCategoria()));
 		
 		// T3 Intentamos recuperar por su nombre una categoria inexistente 

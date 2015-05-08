@@ -97,7 +97,7 @@ public class TestUsuario {
 		miFallidoUsuarioAutenticado = usuarioService.autenticarUsuario(miProgramador.getNombreDeUsuario(), "patata");
 		assertNull(miFallidoUsuarioAutenticado);
 		
-/*		
+		
 		// T5 Probar cambio datos cliente y programador
 		
 		miClienteAutenticado.setPassword("passwordnuevecito");
@@ -123,7 +123,7 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarUsuarioPorLogin(miProgramadorAutenticado.getNombreDeUsuario()));
 		
 		// T7 Probar listado de usuarios
-		
+/*		
 		List<Usuario> miListaU = usuarioService.obtenerListaUsuarios();
 		assertEquals(4, miListaU.size());
 		assertEquals(testUtils.cliente1, miListaU.get(0));
@@ -131,7 +131,7 @@ public class TestUsuario {
 		assertEquals(testUtils.cliente2, miListaU.get(2));
 		assertEquals(testUtils.programador2, miListaU.get(3));
 		miListaU.clear();
-		
+*/
 		List<Cliente> miListaC = usuarioService.obtenerListaClientes();
 		assertEquals(2, miListaC.size());
 		assertEquals(testUtils.cliente1, miListaC.get(0));
@@ -144,7 +144,7 @@ public class TestUsuario {
 		assertEquals(testUtils.programador2, miListaP.get(1));
 		miListaP.clear();
 
-	*/}
+		}
 
 /*
 	@Test

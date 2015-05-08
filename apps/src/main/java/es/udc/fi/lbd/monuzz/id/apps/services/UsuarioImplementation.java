@@ -84,7 +84,8 @@ public class UsuarioImplementation implements UsuarioService {
 			if (usuario.getPassword().equals(password)) {
 				log.info("[Info]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Ha accedido correctamente");
 				return usuario;
-			} else //pass incorrecto
+			} else
+				// pass incorrecto
 				log.error("[Error]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Datos de acceso incorrectos");
 		}
 		return null;
@@ -147,38 +148,113 @@ public class UsuarioImplementation implements UsuarioService {
 	}
 
 	public List<Cliente> obtenerListaClientes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> clientes;
+		try {
+			clientes = usuarioDAO.findAllClientes();
+			log.info("[Info]UsuarioImplementation[obtenerListaClientes()] ==> Recuperada la lista de clientes correctamente");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[obtenerListaClientes()] ==> No se pudo encontrar a ningún cliente");
+			throw e;
+		}
+		return clientes;
 	}
 
 	public List<Programador> obtenerListaProgramadores() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Programador> programadores;
+		try {
+			programadores = usuarioDAO.findAllProgramadores();
+			log.info("[Info]UsuarioImplementation[obtenerListaProgramadores()] ==> Recuperada la lista de programadores correctamente");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[obtenerListaProgramadores()] ==> No se pudo encontrar a ningún programador");
+			throw e;
+		}
+		return programadores;
 	}
 
 	public void registrarApp(App miApp) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miApp != null) {
+				appDAO.create(miApp);
+				log.info("[Info]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> Registrada la aplicación: "
+						+ miApp.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> app = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> No se pudo registrar la aplicación");
+			throw e;
+		}
 	}
 
 	public void actualizarApp(App miApp) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miApp != null) {
+				appDAO.update(miApp);
+				log.info("[Info]UsuarioImplementation[actualizarApp(<Clase> App)] ==> Actualizada la aplicación: "
+						+ miApp.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[actualizarApp(<Clase> App)] ==> app = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[actualizarApp(<Clase> App)] ==> No se pudo actualizar el app");
+			throw e;
+		}
 	}
 
 	public void borrarApp(App miApp) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miApp != null) {
+				appDAO.remove(miApp);
+				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrada la aplicación: "
+						+ miApp.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[borrarApp(<Clase> App)] ==> app = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[borrarApp(<Clase> App)] ==> No se pudo borrar la aplicación");
+			throw e;
+		}
 	}
 
 	public App buscarAppPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		App app = null;
+		try {
+			if (id != null) {
+				app = appDAO.findById(id);
+				if (app == null)
+					log.info("[Info]UsuarioImplementation[buscarAppPorId((<Long> id)] ==> No se ha encontrado la aplicación con id: "
+							+ id);
+				else
+					log.info("[Info]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> Encontrada la aplicación: "
+							+ app.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> id = null");
+
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[buscarAppPorId(<Long> id)] ==> No se pudo encontrar la aplicación con id: "
+					+ id);
+			throw e;
+		}
+		return app;
 	}
 
 	public App buscarAppPorTitulo(String miTitulo) {
-		// TODO Auto-generated method stub
-		return null;
+		App app = null;
+		try {
+			if (miTitulo != null) {
+				app = appDAO.findByTitulo(miTitulo);
+				if (app == null)
+					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo((<Long> miTitulo)] ==> No se ha encontrado ninguna aplicación con el título: "
+							+ miTitulo);
+				else
+					log.info("[Info]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> Encontrada la aplicación: "
+							+ app.toString());
+			} else
+				log.error("[Error]UsuarioImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> miTitulo = null");
+
+		} catch (DataAccessException e) {
+			log.error("[Error]AppImplementation[buscarAppPorTitulo(<Long> miTitulo)] ==> No se pudo encontrar la aplicación con el título: "
+					+ miTitulo);
+			throw e;
+		}
+		return app;
 	}
 
 	public List<App> obtenerAppsProgramador(Programador miProgramador) {

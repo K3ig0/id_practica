@@ -16,6 +16,7 @@ import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
+import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 import es.udc.fi.lbd.monuzz.id.apps.model.Version;
 
@@ -76,6 +77,16 @@ public class UsuarioImplementation implements UsuarioService {
 	}
 
 	public Usuario autenticarUsuario(String login, String password) {
+		Usuario usuario = buscarUsuarioPorLogin(login);
+		if (usuario == null)
+			log.error("[Error]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Datos de acceso incorrectos");
+		else {
+			if (usuario.getPassword().equals(password)) {
+				log.info("[Info]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Ha accedido correctamente");
+				return usuario;
+			} else //pass incorrecto
+				log.error("[Error]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Datos de acceso incorrectos");
+		}
 		return null;
 	}
 
@@ -103,18 +114,6 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public Usuario buscarUsuarioPorLogin(String login) {
 		Usuario usuario = null;
-		/*
-		 * try { usuario = usuarioDAO.findByNombreDeUsuario(login);
-		 * log.info("UsuarioImplementation ==> Encontrado al usuario: " +
-		 * usuario.toString());
-		 * 
-		 * } catch (DataAccessException e) { log.error(
-		 * "[Error]UsuarioImplementation ==> No se pudo encontrar el usuario con el login: "
-		 * + login); throw e; } catch (RuntimeException e) { // se lanza en el
-		 * DAO si es nulo log.error(
-		 * "[Error]Usuarioplementation ==> No se pudo encontrar el usuario con el login: "
-		 * + login); } return usuario;
-		 */
 		try {
 			if (login != null) {
 				usuario = usuarioDAO.findByNombreDeUsuario(login);
@@ -136,8 +135,15 @@ public class UsuarioImplementation implements UsuarioService {
 	}
 
 	public List<Usuario> obtenerListaUsuarios() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Usuario> usuarios;
+		try {
+			usuarios = usuarioDAO.findAll();
+			log.info("[Info]UsuarioImplementation[obtenerListaUsuarios()] ==> Recuperada la lista de usuarios correctamente");
+		} catch (DataAccessException e) {
+			log.error("[Error]UsuarioImplementation[obtenerListaUsuarios()] ==> No se pudo encontrar a ningún usuario");
+			throw e;
+		}
+		return usuarios;
 	}
 
 	public List<Cliente> obtenerListaClientes() {

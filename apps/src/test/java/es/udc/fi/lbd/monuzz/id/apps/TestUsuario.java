@@ -74,11 +74,11 @@ public class TestUsuario {
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
 
-		/*duplicado=false;
+		duplicado=false;
 		try {usuarioService.registrarNuevoUsuario(miCliente);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
-		/*
+		
 		// T3. Comprobamos que la autenticación funciona
 		
 		Cliente miClienteAutenticado = (Cliente) usuarioService.autenticarUsuario(miCliente.getNombreDeUsuario(), miCliente.getPassword());
@@ -97,7 +97,7 @@ public class TestUsuario {
 		miFallidoUsuarioAutenticado = usuarioService.autenticarUsuario(miProgramador.getNombreDeUsuario(), "patata");
 		assertNull(miFallidoUsuarioAutenticado);
 		
-		
+/*		
 		// T5 Probar cambio datos cliente y programador
 		
 		miClienteAutenticado.setPassword("passwordnuevecito");

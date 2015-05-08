@@ -91,14 +91,14 @@ public class TestUtils {
 		adminService.registrarNuevaCategoria(cat1);
 		adminService.registrarNuevaCategoria(cat2);
 		
-		/* Insertamos programadores, inicialmente sin aplicaciones *//*
+		/* Insertamos programadores, inicialmente sin aplicaciones */
 	
 		programador1 = new Programador("monuzz", "monuzz13", "Mon", "López", "Rodríguez", "Mon López");
 		programador2 = new Programador("mi", "mi13", "Miguel", "Rodríguez", "Penabad", "Miguel Penabad");
 
 		usuarioService.registrarNuevoUsuario(programador1);
 		usuarioService.registrarNuevoUsuario(programador2);
-
+/*
 		/* Insertamos aplicaciones con sus versiones iniciales. Solo se insertan las apps: asumimos propagación activada para las versiones *//*
 		
 		app1 = new App("App1", new Timestamp(Calendar.getInstance().getTimeInMillis()), new Float(0.95), programador1, cat11, tipoPayware);
@@ -130,8 +130,8 @@ public class TestUtils {
 		usuarioService.registrarApp(app2);
 		usuarioService.registrarApp(app3);
 		usuarioService.registrarApp(app4);
-
-		/* Registramos clientes */ /*
+*/
+		/* Registramos clientes */ 
 
 		cliente1 = new Cliente ("cmonuzz", "monuzz13", "Climon", "López", "Rodríguez", "Climon López", "Premium", new Float(1000));
 		cliente2 = new Cliente ("cmi", "mi13", "Climiguel", "Rodríguez", "Penabad", "Climiguel Penabad", "Normalillo", new Float(30));
@@ -141,7 +141,7 @@ public class TestUtils {
 		usuarioService.registrarNuevoUsuario(cliente1);
 		usuarioService.registrarNuevoUsuario(cliente2);
 		
-	*/}
+	}
 	
 	public void eliminaSetDatosPrueba() {
 
@@ -159,14 +159,14 @@ public class TestUtils {
 		usuarioService.borrarApp(app2);
 		usuarioService.borrarApp(app3);
 		usuarioService.borrarApp(app4);
-
+*/
 		usuarioService.borrarUsuario(cliente1);
 		usuarioService.borrarUsuario(cliente2);
 	
 		usuarioService.borrarUsuario(programador1);
 		usuarioService.borrarUsuario(programador2);
 
-*/
+
 		adminService.borrarTipoApp(tipoFreeware);
 		adminService.borrarTipoApp(tipoShareware);
 		adminService.borrarTipoApp(tipoPayware); 

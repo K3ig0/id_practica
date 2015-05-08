@@ -19,18 +19,18 @@ public class TipoAppDAOImplementation implements TipoAppDAO {
 	@Transactional(value="miTransactionManager")
 	public Long create(TipoApp miTipo) {
 		Long id;
-		if (miTipo.getIdTipoApp()!=null){
+		/*if (miTipo.getIdTipoApp()!=null){
 			throw new RuntimeException("TipoApp ya existente");
-		}
+		}*/
 		id = (Long) sessionFactory.getCurrentSession().save(miTipo);
 		return id;
 	}
 
 	@Transactional(value="miTransactionManager")
 	public void remove(TipoApp miTipo) {
-		if (miTipo.getIdTipoApp()==null){
+		/*if (miTipo.getIdTipoApp()==null){
 			throw new RuntimeException("TipoApp no existente");
-		}
+		}*/
 		sessionFactory.getCurrentSession().delete(miTipo);		
 	}
 

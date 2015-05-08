@@ -28,15 +28,16 @@ public class AdminImplementation implements AdminService {
 
 	public void registrarNuevoTipoApp(TipoApp miTipo) {
 		try {
-			tipoAppDAO.create(miTipo);
-			log.info("AdminImplementation ==> Registrado el tipo de app: "
-					+ miTipo.toString());
+			if (miTipo==null)
+				log.error("AdminImplementation[registrarNuevoTipoApp(Clase TipoApp)] ==> tipoApp = null");
+			else {
+				tipoAppDAO.create(miTipo);
+				log.info("AdminImplementation ==> Registrado el tipo de app: "
+						+ miTipo.toString());
+			}
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app: "
-					+ miTipo.toString());
-			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
 			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app");
+			throw e;
 		}
 	}
 
@@ -46,11 +47,8 @@ public class AdminImplementation implements AdminService {
 			log.info("AdminImplementation ==> Borrado el tipo de app: "
 					+ miTipo.toString());
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation ==> No se pudo borrar el tipo de app: "
-					+ miTipo.toString());
-			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
 			log.error("[Error]AdminImplementation ==> No se pudo borrar el tipo de app");
+			throw e;
 		}
 	}
 
@@ -64,9 +62,6 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "
 					+ id);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "
-					+ id);
 		}
 		return tipoApp;
 	}
@@ -81,9 +76,6 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el nombre: "
 					+ nombre);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app con el nombre: "
-					+ nombre);
 		}
 		return tipoApp;
 	}
@@ -104,7 +96,7 @@ public class AdminImplementation implements AdminService {
 	public void registrarNuevaCategoria(Categoria miCategoria) {
 		try {
 			categoriaDAO.create(miCategoria);
-			log.info("AdminImplementation ==> Registrada la categoría: "
+			log.info("AdminImplementation[registrarNuevaCategoria(Clase categoria)] ==> Registrada la categoría: "
 					+ miCategoria.toString());
 
 			Set<Categoria> subCategorias = miCategoria.getSubcategorias();
@@ -115,8 +107,7 @@ public class AdminImplementation implements AdminService {
 				}
 			
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation ==> No se pudo registrar la categoría: "
-					+ miCategoria.toString());
+			log.error("[Error]AdminImplementation ==> No se pudo registrar la categoría");
 			throw e;
 		}
 	}
@@ -132,11 +123,8 @@ public class AdminImplementation implements AdminService {
 			log.info("AdminImplementation ==> Borrada la categoría: "
 					+ miCategoria.toString() + "y sus subcategorías");
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation ==> No se pudo borrar la categoría: "
-					+ miCategoria.toString() + "ni sus subcategorías");
-			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
 			log.error("[Error]AdminImplementation ==> No se pudo borrar la categoría ni sus subcategorías");
+			throw e;
 		}
 	}
 
@@ -144,18 +132,17 @@ public class AdminImplementation implements AdminService {
 		Categoria categoria = null;
 		try {
 			categoria = categoriaDAO.findById(id);
-			log.info("AdminImplementation ==> Encontrada la categoría: "
+			if (categoria != null)
+				log.info("AdminImplementation[buscarCategoriaporId()] ==> Encontrada la categoría: "
 					+ categoria.toString());
+			else
+				log.error("");
 
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría con el id: "
 					+ id);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría con el id: "
-					+ id);
 		}
-
 		return categoria;
 	}
 
@@ -170,9 +157,6 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría: "
 					+ nombre);
 			throw e;
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría: "
-					+ nombre);
 		}
 		return categoria;
 	}
@@ -199,9 +183,6 @@ public class AdminImplementation implements AdminService {
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar ninguna categoría");
 			throw e;
-			
-		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
-			log.error("[Error]AdminImplementation(buscarSubcategorias) ==> No se pudo encontrar ninguna categoría");
 		}
 		return subCategorias;
 	}

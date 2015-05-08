@@ -55,7 +55,7 @@ public class TestUsuario {
 		Programador miProgramador = new Programador("programadorTest", "test13", "Nikito", "Nipongo", "Camacho", "Nikito Nipongo");
 		usuarioService.registrarNuevoUsuario(miProgramador);		
 		assertNotNull(miProgramador.getIdUsuario());
-		/*assertEquals(miProgramador, (Programador) usuarioService.buscarUsuarioPorId(miProgramador.getIdUsuario()));
+		assertEquals(miProgramador, (Programador) usuarioService.buscarUsuarioPorId(miProgramador.getIdUsuario()));
 		assertEquals(miProgramador, (Programador) usuarioService.buscarUsuarioPorLogin(miProgramador.getNombreDeUsuario()));
 	
 		Cliente miCliente = new Cliente ("clienteTest", "test13", "Nokito", "Nada", "Nada", "Nokito Nada", "Premium", new Float(5000));
@@ -65,18 +65,20 @@ public class TestUsuario {
 		assertEquals(miCliente, (Cliente) usuarioService.buscarUsuarioPorId(miCliente.getIdUsuario()));
 		assertEquals(miCliente, (Cliente) usuarioService.buscarUsuarioPorLogin(miCliente.getNombreDeUsuario()));
 
-/*
+
 		// T2. Registrar usuario duplicado
+		//Programador miProgramador2 = new Programador("programadorTest", "test13", "Nikito", "Nipongo", "Camacho", "Nikito Nipongo");
 		Boolean duplicado=false;
+		System.out.println(miProgramador.toString());
 		try {usuarioService.registrarNuevoUsuario(miProgramador);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
 
-		duplicado=false;
+		/*duplicado=false;
 		try {usuarioService.registrarNuevoUsuario(miCliente);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
-		
+		/*
 		// T3. Comprobamos que la autenticación funciona
 		
 		Cliente miClienteAutenticado = (Cliente) usuarioService.autenticarUsuario(miCliente.getNombreDeUsuario(), miCliente.getPassword());

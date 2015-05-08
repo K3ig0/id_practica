@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,9 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	@Transactional(value="miTransactionManager")
 	public Long create(Usuario miUsuario) {
 		Long id;
-		if (miUsuario.getIdUsuario()!=null){
-			throw new RuntimeException("Usuario ya existente");
-		}
+		/*if (miUsuario.getIdUsuario()!=null){
+			throw new DataIntegrityViolationException("Usuario ya existente");
+		}*/
 		id = (Long) sessionFactory.getCurrentSession().save(miUsuario);
 		return id;
 	}
@@ -42,7 +43,7 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 		if (miUsuario.getIdUsuario()==null){
 			throw new RuntimeException("Usuario no existente");
 		}
-		sessionFactory.getCurrentSession().save(miUsuario);	
+		sessionFactory.getCurrentSession().update(miUsuario);
 	}
 
 	@Transactional(value="miTransactionManager")

@@ -79,7 +79,7 @@ public class TestAdmin {
 		assertEquals("Payware",   miLista.get(2).getNombre());
 		assertEquals("Shareware", miLista.get(3).getNombre());
 		miLista.clear();
-		/*
+		/* IMPLEMENTAR APP PRIMERO
 		// T5 Tratamos de eliminar un tipo de app con apps asociadas
 		
 		Boolean intRef=false;

@@ -72,13 +72,13 @@ public class TestAdmin {
 		
 		// T4 Recuperamos los tipos de app existentes, por orden alfabético de nombre
 		
-		/*List<TipoApp> miLista = adminService.buscarTodosTipoApp();
+		List<TipoApp> miLista = adminService.buscarTodosTipoApp();
 		assertEquals(4, miLista.size());
 		assertEquals("Freeware",  miLista.get(0).getNombre());
 		assertEquals("Mocoware",  miLista.get(1).getNombre());
 		assertEquals("Payware",   miLista.get(2).getNombre());
 		assertEquals("Shareware", miLista.get(3).getNombre());
-		miLista.clear();*/
+		miLista.clear();
 		/*
 		// T5 Tratamos de eliminar un tipo de app con apps asociadas
 		
@@ -118,7 +118,7 @@ public class TestAdmin {
 		assertNotNull(adminService.buscarCategoriaPorNombre(catA1.getNombre()));
 		assertNotNull(adminService.buscarCategoriaPorNombre(catA2.getNombre()));
 
-		/*
+		
 		// T2. Creamos categoria ya existente, y detectamos duplicidad del nombre
 		
 		Categoria catANueva = new Categoria("Categoria A"); 
@@ -128,7 +128,9 @@ public class TestAdmin {
 		Boolean duplicado=false;
 		try {adminService.registrarNuevaCategoria(catANueva);} catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);		
+		System.out.println(catA1Nueva.getIdCategoria());
 		assertNull(adminService.buscarCategoriaPorId(catANueva.getIdCategoria()));
+		System.out.println(catA1Nueva.getIdCategoria());
 		assertNull(adminService.buscarCategoriaPorId(catA1Nueva.getIdCategoria()));
 		
 		// T3 Intentamos recuperar por su nombre una categoria inexistente 
@@ -166,7 +168,7 @@ public class TestAdmin {
 		miLista = adminService.buscarSubcategorias(testUtils.cat12);
 		assertEquals(0, miLista.size());
 		miLista.clear();
-		
+		/*
 		// T6 Contamos aplicaciones de la categoria
 		
 		Long numApps;

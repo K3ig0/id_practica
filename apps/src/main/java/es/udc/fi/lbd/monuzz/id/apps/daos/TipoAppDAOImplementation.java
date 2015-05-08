@@ -50,7 +50,7 @@ public class TipoAppDAOImplementation implements TipoAppDAO {
 
 	@Transactional(value="miTransactionManager")
 	public List<TipoApp> findAll() {
-		return sessionFactory.getCurrentSession().createQuery( "from " + TipoApp.class.getName()).list();
+		return sessionFactory.getCurrentSession().createQuery( "from " + TipoApp.class.getName() + " order by nombre").list();
 
 	}
 

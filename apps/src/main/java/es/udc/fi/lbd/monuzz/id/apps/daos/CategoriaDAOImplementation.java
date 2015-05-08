@@ -1,8 +1,11 @@
 package es.udc.fi.lbd.monuzz.id.apps.daos;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
-import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 @Repository
 public class CategoriaDAOImplementation implements CategoriaDAO {
 
@@ -45,12 +47,17 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 
 	@Transactional(value="miTransactionManager")
 	public Categoria findById(Long idCategoria) {
-
+		if (idCategoria==null){
+			throw new RuntimeException("Categoría no existente");
+		}
 		return (Categoria) sessionFactory.getCurrentSession().get(Categoria.class, idCategoria);
 	}
 
 	@Transactional(value="miTransactionManager")
 	public Categoria findByNombre(String nombreCategoria) {
+		if (nombreCategoria==null){
+			throw new RuntimeException("Categoría no existente");
+		}
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where nombre=:nombreCategoria");
 		q.setString("nombreCategoria",nombreCategoria);
 		return (Categoria) q.uniqueResult();
@@ -64,18 +71,31 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
+		if (miCategoria==null){
+			throw new RuntimeException("Categoría no existente");
+		}
 		Long id=miCategoria.getIdCategoria();
-		Query q = sessionFactory.getCurrentSession().createQuery(
+		String q_str = 
 				"with recursive rcat as ( "+
 					"select * "+				
-						"from categoria " + Categoria.class.getName() +
-						" where id_categoria=:id "+
+						"from categoria "+
+						" where id_categoria = ?"+
 				"union "+
 					"select s.id_categoria, s.nombre, s.id_categoria_madre "+
 						"from categoria s join rcat r on (s.id_categoria_madre = r.id_categoria)) "+
-				"select * from rcat offset 1");
-		q.setString("id",id.toString());
-		return (List<Categoria>) q.list();
+				"select * from rcat order by rcat.nombre offset 1";
+		
+		SQLQuery q = sessionFactory.getCurrentSession().createSQLQuery(q_str);
+		q.setLong(0,id);
+		q.addEntity(Categoria.class);
+		List subCategorias_list = q.list();
+		List<Categoria> subCategorias = new ArrayList <>();
+		
+		for (Iterator iterator = subCategorias_list.iterator(); iterator.hasNext();) {
+			Categoria subCat = (Categoria) iterator.next();
+			subCategorias.add(subCat);
+		}
+		 return subCategorias;
 	}
 
 	@Transactional(value="miTransactionManager")

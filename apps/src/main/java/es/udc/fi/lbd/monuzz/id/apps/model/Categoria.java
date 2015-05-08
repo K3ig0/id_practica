@@ -47,7 +47,7 @@ public class Categoria {
 		return nombre;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_categoria_madre")
 	public Categoria getmadre() {
 		return madre;

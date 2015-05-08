@@ -70,20 +70,20 @@ public class TestUtils {
 		cat1  = new Categoria("Categoria 1");
 		cat11 = new Categoria("Categoria 1.1");
 		cat12 = new Categoria("Categoria 1.2");
-		//borrar
+		/*borrar
 		cat111 = new Categoria("Categoria 1.1.1");
 		cat121 = new Categoria("Categoria 1.2.1");
 		cat122 = new Categoria("Categoria 1.2.2");
-		//
+		*/
 		cat2  = new Categoria("Categoria 2");
 		cat21 = new Categoria("Categoria 2.1");
 		cat22 = new Categoria("Categoria 2.2");
 		
 		cat1.addSubcategoria(cat11);
 		cat1.addSubcategoria(cat12);
-		cat11.addSubcategoria(cat111);
+		/*cat11.addSubcategoria(cat111);
 		cat12.addSubcategoria(cat121);
-		cat12.addSubcategoria(cat122);
+		cat12.addSubcategoria(cat122);*/
 		cat2.addSubcategoria(cat21);
 		cat2.addSubcategoria(cat22);
 		

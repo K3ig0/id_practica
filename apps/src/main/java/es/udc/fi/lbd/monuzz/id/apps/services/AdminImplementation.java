@@ -1,6 +1,5 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +35,8 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app: "
 					+ miTipo.toString());
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app");
 		}
 	}
 
@@ -48,6 +49,8 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo borrar el tipo de app: "
 					+ miTipo.toString());
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo borrar el tipo de app");
 		}
 	}
 
@@ -57,16 +60,13 @@ public class AdminImplementation implements AdminService {
 			tipoApp = tipoAppDAO.findById(id);
 			log.info("AdminImplementation ==> Encontrado el tipo de app: "
 					+ tipoApp.toString());
-		} catch (NullPointerException e) { // Si no existe lanzará esta
-											// excepción tipoApp.toString(). No
-											// interesa lanzar excepción para
-											// que los test no fallen.
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "
-					+ id);
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "
 					+ id);
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el id: "
+					+ id);
 		}
 		return tipoApp;
 	}
@@ -77,16 +77,13 @@ public class AdminImplementation implements AdminService {
 			tipoApp = tipoAppDAO.findByNombre(nombre);
 			log.info("AdminImplementation ==> Encontrado el tipo de app: "
 					+ tipoApp.toString());
-		} catch (NullPointerException e) { // Si no existe lanzará esta
-											// excepción tipoApp.toString(). No
-											// interesa lanzar excepción para
-											// que los test no fallen.
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el nombre: "
-					+ nombre);
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar el tipo de app con el nombre: "
 					+ nombre);
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo registrar el tipo de app con el nombre: "
+					+ nombre);
 		}
 		return tipoApp;
 	}
@@ -103,7 +100,7 @@ public class AdminImplementation implements AdminService {
 		return tipoApps;
 	}
 
-	//Implementado para N niveles
+	// Implementado para N niveles
 	public void registrarNuevaCategoria(Categoria miCategoria) {
 		try {
 			categoriaDAO.create(miCategoria);
@@ -111,10 +108,12 @@ public class AdminImplementation implements AdminService {
 					+ miCategoria.toString());
 
 			Set<Categoria> subCategorias = miCategoria.getSubcategorias();
+
 			if (!subCategorias.isEmpty())
 				for (Categoria subCat : subCategorias) {
 					registrarNuevaCategoria(subCat);
 				}
+			
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo registrar la categoría: "
 					+ miCategoria.toString());
@@ -136,6 +135,8 @@ public class AdminImplementation implements AdminService {
 			log.error("[Error]AdminImplementation ==> No se pudo borrar la categoría: "
 					+ miCategoria.toString() + "ni sus subcategorías");
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo borrar la categoría ni sus subcategorías");
 		}
 	}
 
@@ -145,17 +146,16 @@ public class AdminImplementation implements AdminService {
 			categoria = categoriaDAO.findById(id);
 			log.info("AdminImplementation ==> Encontrada la categoría: "
 					+ categoria.toString());
-		} catch (NullPointerException e) { // Si no existe lanzará esta
-											// excepción categoria.toString(). No
-											// interesa lanzar excepción para
-											// que los test no fallen.
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría con el id: "
-					+ id);
+
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría con el id: "
 					+ id);
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría con el id: "
+					+ id);
 		}
+
 		return categoria;
 	}
 
@@ -164,29 +164,46 @@ public class AdminImplementation implements AdminService {
 		try {
 			categoria = categoriaDAO.findByNombre(nombre);
 			log.info("AdminImplementation ==> Encontrada la categoría: "
-					+ categoria.toString());
-		} catch (NullPointerException e) { // Si no existe lanzará esta
-											// excepción categoria.toString(). No
-											// interesa lanzar excepción para
-											// que los test no fallen.
-			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría: "
-					+ nombre);
+						+ categoria.toString());
+
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría: "
 					+ nombre);
 			throw e;
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar la categoría: "
+					+ nombre);
 		}
 		return categoria;
 	}
 
 	public List<Categoria> buscarCategoriasPrincipales() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Categoria> categorias = null;
+		try {
+			categorias = categoriaDAO.findFirstLevel();
+			log.info("AdminImplementation ==> Lista de categorías principales encontrada correctamente");
+
+		} catch (DataAccessException e) {
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar ninguna categoría");
+			throw e;
+		}
+		return categorias;
 	}
 
 	public List<Categoria> buscarSubcategorias(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Categoria> subCategorias = null;
+		try {
+			subCategorias = categoriaDAO.findSubcategories(miCategoria);
+			log.info("AdminImplementation ==> Lista de subcategorías encontrada correctamente");
+
+		} catch (DataAccessException e) {
+			log.error("[Error]AdminImplementation ==> No se pudo encontrar ninguna categoría");
+			throw e;
+			
+		} catch (RuntimeException e) { // se lanza en el DAO si es nulo
+			log.error("[Error]AdminImplementation(buscarSubcategorias) ==> No se pudo encontrar ninguna categoría");
+		}
+		return subCategorias;
 	}
 
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {

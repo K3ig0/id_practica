@@ -129,8 +129,18 @@ public class AdminImplementation implements AdminService {
 	}
 
 	public void modificarCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-
+		try {
+			if (miCategoria != null) {
+				categoriaDAO.update(miCategoria);
+				log.info("[Info]AdminImplementation[modificarCategoria(<Clase> categoria)] ==> Modificada la categoría: "
+						+ miCategoria.toString() + "y sus subcategorías");
+			} else
+				log.error("[Error]AdminImplementation[modificarCategoria(<Clase> categoria)] ==> categoria = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]AdminImplementation[modificarCategoria(<Clase> categoria)] ==> No se pudo modificar la categoría: "
+					+ miCategoria.toString() + " ni sus subcategorías");
+			throw e;
+		}
 	}
 
 	public void borrarCategoria(Categoria miCategoria) {
@@ -204,10 +214,10 @@ public class AdminImplementation implements AdminService {
 	public List<Categoria> buscarSubcategorias(Categoria miCategoria) {
 		List<Categoria> subCategorias = null;
 		try {
-			if (miCategoria != null){
+			if (miCategoria != null) {
 				subCategorias = categoriaDAO.findSubcategories(miCategoria);
 				log.info("[Info]AdminImplementation[buscarSubcategorias(<Clase> categoria)] ==> Lista de subcategorías encontrada correctamente");
-			}else
+			} else
 				log.error("[Error]AdminImplementation[buscarSubcategorias(<Clase> categoria)] ==> categoria = null");
 		} catch (DataAccessException e) {
 			log.error("[Error]AdminImplementation[buscarSubcategorias(<Clase> categoria)] ==> No se pudo encontrar ninguna subcategoría");
@@ -218,6 +228,10 @@ public class AdminImplementation implements AdminService {
 
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
 		// TODO Auto-generated method stub
+		if (miCategoria != null) {
+			//TODO
+		} else
+			log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> categoria = null");
 		return null;
 	}
 

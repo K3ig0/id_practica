@@ -54,7 +54,7 @@ public class Version {
 		return fechaDePublicacion;
 	}
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="id_app")
 	public App getApp() {
 		return app;

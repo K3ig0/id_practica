@@ -1,6 +1,5 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -344,6 +343,8 @@ public class UsuarioImplementation implements UsuarioService {
 	public void borrarVersion(Version miVersion) {
 		try {
 			if (miVersion != null) {
+				if (obtenerListaVersiones(miVersion.getApp()).size() == 1)
+					throw new RuntimeException("No se puede borrar la última versión para una app");
 				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> Borrando la versión: "
 						+ miVersion.toString() + " ...");
 				versionDAO.remove(miVersion);

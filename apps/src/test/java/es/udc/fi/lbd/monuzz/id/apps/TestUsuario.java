@@ -183,7 +183,7 @@ public class TestUsuario {
 		// T4 Dar de baja versión
 		
 		usuarioService.borrarVersion(miVersion2);
-/*		miLista = usuarioService.obtenerListaVersiones(miApp);
+		miLista = usuarioService.obtenerListaVersiones(miApp);
 		assertEquals(1, miLista.size());
 		assertEquals (miVersion, miLista.get(0));
 		miLista.clear();
@@ -194,7 +194,7 @@ public class TestUsuario {
 		try { usuarioService.borrarVersion(miVersion); }
 			catch (Exception e) {ultimaVersion=true;}
 		assertTrue(ultimaVersion);
-	
+/*	
 		// T6 Fallar al dar de baja aplicacion con clientes
 		
 		testUtils.cliente1.getApps().add(miApp);

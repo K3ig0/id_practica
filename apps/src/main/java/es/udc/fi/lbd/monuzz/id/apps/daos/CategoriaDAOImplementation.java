@@ -84,14 +84,14 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 
 	@Transactional(value="miTransactionManager")
 	public Long getNumApps(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return (Long) sessionFactory.getCurrentSession().createQuery("select count(*) from " + App.class.getName() + " where id_categoria=" + miCategoria.getIdCategoria()).uniqueResult();
 	}
 
 	@Transactional(value="miTransactionManager")
 	public List<App> getApps(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where id_categoria=" + miCategoria.getIdCategoria()).list();
 	}
 
 }

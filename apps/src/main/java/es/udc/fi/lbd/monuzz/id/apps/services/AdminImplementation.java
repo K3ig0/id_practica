@@ -230,11 +230,22 @@ public class AdminImplementation implements AdminService {
 
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
 		// TODO Auto-generated method stub
-		if (miCategoria != null) {
-			//TODO
-		} else
-			log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> categoria = null");
-		return null;
+		Long n = null;
+		try {
+			if (miCategoria != null) {
+				n = categoriaDAO.getNumApps(miCategoria);
+				log.info("[Info]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> Número de Apps de la categoría "
+						+ miCategoria.toString() + " encontradas con éxito");
+				log.info("[Info]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> BORRAR. numero de apps encontradas = "
+						+ n.toString());
+			} else
+				log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> categoria = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> No se pudo calcular el número de Apps de la categoría "
+					+ miCategoria.toString());
+			throw e;
+		}
+		return n;
 	}
 
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {

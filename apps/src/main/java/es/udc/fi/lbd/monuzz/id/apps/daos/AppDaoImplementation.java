@@ -55,8 +55,11 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
-		//POSIBLEMENTE DEVUELVE 2 COLUMNAS DE MÁS DE LA TABLA DEL JOIN Y NO PUEDA CONVERTIR
-		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a join cli_app r on a.id_app=r.id_app where r.id_usuario="+miCliente.getIdUsuario()).list();
+		Long id = miCliente.getIdUsuario();
+		Query q = sessionFactory.getCurrentSession().createQuery("select a from " + App.class.getName() + " a where id_app in (select r.idApp from " + Cliente.class.getName() + " c join c.apps r where c.idUsuario = :id)");
+		q.setLong("id", id);
+
+		return q.list();
 	}
 
 	@Transactional(value = "miTransactionManager")
@@ -67,7 +70,7 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public List<Cliente> findAllClientes(App miApp) {
-		Query q = sessionFactory.getCurrentSession().createQuery("select c from Cliente c join c.apps r where r.app=:app");
+		Query q = sessionFactory.getCurrentSession().createQuery("select c from " + Cliente.class.getName() + " c join c.apps r where r.app=:app");
 		q.setEntity("app", miApp);
 
 		return q.list();

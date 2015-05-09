@@ -79,7 +79,7 @@ public class TestAdmin {
 		assertEquals("Payware",   miLista.get(2).getNombre());
 		assertEquals("Shareware", miLista.get(3).getNombre());
 		miLista.clear();
-		/* IMPLEMENTAR APP PRIMERO
+		
 		// T5 Tratamos de eliminar un tipo de app con apps asociadas
 		
 		Boolean intRef=false;
@@ -92,7 +92,7 @@ public class TestAdmin {
 		adminService.borrarTipoApp(miTipoApp);
 		assertNull (adminService.buscarTipoAppPorId(miTipoApp.getIdTipoApp()));
 		assertNull (adminService.buscarTipoAppPorNombre(miTipoApp.getNombre()));
-	*/}
+	}
 
 	@Test
 	public void testCategoria() {
@@ -166,9 +166,10 @@ public class TestAdmin {
 		miLista = adminService.buscarSubcategorias(testUtils.cat12);
 		assertEquals(0, miLista.size());
 		miLista.clear();
-		/*
+		
 		// T6 Contamos aplicaciones de la categoria
 		
+		/*
 		Long numApps;
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat1);
 		assertEquals (new Long(3), numApps);
@@ -180,7 +181,7 @@ public class TestAdmin {
 		assertEquals (new Long(1), numApps);
 		numApps = adminService.calcularNumAppsCategoria(catA);
 		assertEquals (new Long(0), numApps);
-
+/*
 		// T7 Recuperamos aplicaciones de diferentes categorias, por orden de votos (inverso, de más a menos)
 		
 		List<App> listaApps = adminService.buscarAppsCategoria(testUtils.cat1);

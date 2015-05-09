@@ -26,10 +26,13 @@ public class TestUtils {
 	public Categoria cat11;
 	public Categoria cat12;
 	//borrar
+	/*
 	public Categoria cat111;
 	public Categoria cat121;
 	public Categoria cat122;
 	//
+	*/
+	
 	public Categoria cat2;
 	public Categoria cat21;
 	public Categoria cat22;
@@ -136,7 +139,7 @@ public class TestUtils {
 		cliente1 = new Cliente ("cmonuzz", "monuzz13", "Climon", "López", "Rodríguez", "Climon López", "Premium", new Float(1000));
 		cliente2 = new Cliente ("cmi", "mi13", "Climiguel", "Rodríguez", "Penabad", "Climiguel Penabad", "Normalillo", new Float(30));
 
-		//cliente1.getApps().add(app1);
+		//cliente1.getApps().add(app1); FIRE
 		
 		usuarioService.registrarNuevoUsuario(cliente1);
 		usuarioService.registrarNuevoUsuario(cliente2);
@@ -147,7 +150,7 @@ public class TestUtils {
 
 
 		
-/*
+/*		FIRE
 		usuarioService.cancelarClientes(app1);
 		usuarioService.cancelarClientes(app2);
 		usuarioService.cancelarClientes(app3);
@@ -172,7 +175,7 @@ public class TestUtils {
 		adminService.borrarTipoApp(tipoPayware); 
 		
 		/* Borramos categorías principales. Asumimos propagación del borrado para el resto */		
-	
+		
 		adminService.borrarCategoria(cat1);
 		adminService.borrarCategoria(cat2);
 		

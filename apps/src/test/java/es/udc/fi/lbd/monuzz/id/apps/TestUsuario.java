@@ -48,7 +48,7 @@ public class TestUsuario {
 		log.info ("Datos eliminados con éxito");
 	}
 	
-	@Test
+	//@Test
 	public void testBasicoUsuario() {
 		
 		// T1. Crear usuario y registrarlo 
@@ -146,7 +146,7 @@ public class TestUsuario {
 
 		}
 
-/*
+
 	@Test
 	public void testProgramadorCliente() {
 	
@@ -179,15 +179,15 @@ public class TestUsuario {
 		usuarioService.actualizarApp(miApp);
 		assertEquals(miApp.getTitulo(), usuarioService.buscarAppPorId(miApp.getIdApp()).getTitulo());
 		assertEquals(miApp.getVotos(), usuarioService.buscarAppPorId(miApp.getIdApp()).getVotos());
-		
+
 		// T4 Dar de baja versión
 		
 		usuarioService.borrarVersion(miVersion2);
-		miLista = usuarioService.obtenerListaVersiones(miApp);
+/*		miLista = usuarioService.obtenerListaVersiones(miApp);
 		assertEquals(1, miLista.size());
 		assertEquals (miVersion, miLista.get(0));
 		miLista.clear();
-		
+
 		// T5 Fallar al dar de baja la última versión
 		
 		Boolean ultimaVersion=false;
@@ -232,7 +232,7 @@ public class TestUsuario {
 		usuarioService.cancelarClientes(miApp);
 		assertEquals (1, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (0, usuarioService.obtenerClientesApp(miApp).size());
-		
+*/		
 		// T10 Eliminar app sin clientes (y sus versiones)
 		
 		usuarioService.borrarApp(miApp);
@@ -240,7 +240,7 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarAppPorTitulo(miApp.getTitulo()));
 		assertNull(usuarioService.BuscarVersionPorId(miVersion.getIdVersion()));
 		
-	}*/
+	}
 
 		
 

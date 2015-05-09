@@ -2,6 +2,7 @@ package es.udc.fi.lbd.monuzz.id.apps.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,8 +44,9 @@ public class VersionDAOImplementation implements VersionDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public List<Version> findAllByApp(App miApp) {
-
-		return miApp.getVersiones();
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + Version.class.getName() + " v where v.app=:app order by fecha_publicacion desc");
+		q.setEntity("app", miApp);
+		return q.list();
 	}
 
 	@Transactional(value = "miTransactionManager")

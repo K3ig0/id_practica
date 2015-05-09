@@ -69,25 +69,25 @@ public class App  {
 		return precio;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_programador")
 	public Programador getAutor() {
 		return autor;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_categoria")
 	public Categoria getCategoria() {
 		return categoria;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_tipo_app")
 	public TipoApp getTipoApp() {
 		return tipoApp;
 	}
 	
-	@OneToMany(mappedBy="app",fetch=FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy="app", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Version> getVersiones() {
 		return versiones;
 	}

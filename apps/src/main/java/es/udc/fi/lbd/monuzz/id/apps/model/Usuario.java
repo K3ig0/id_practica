@@ -60,7 +60,7 @@ public class Usuario {
 		return apellido2;
 	}
 	
-	@Column (name="nome_pantalla", nullable=true, unique=false)
+	@Column (name="nombre_pantalla", nullable=true, unique=false)
 	public String getNombreEnPantalla() {
 		return nombreEnPantalla;
 	}

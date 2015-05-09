@@ -47,11 +47,11 @@ public class Cliente extends Usuario {
 		return saldo;
 	}
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable (
 			name="CLI_APP",
 			joinColumns={@JoinColumn(name="id_app")},
-			inverseJoinColumns = {@JoinColumn(name="id_usuario")}
+			inverseJoinColumns = {@JoinColumn(name="id_cliente")}
 			)
 	public List<App> getApps() {
 		return apps;

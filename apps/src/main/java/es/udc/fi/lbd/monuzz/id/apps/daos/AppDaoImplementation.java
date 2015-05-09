@@ -12,7 +12,6 @@ import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
-import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 
 @Repository
 public class AppDaoImplementation implements AppDAO {
@@ -57,7 +56,7 @@ public class AppDaoImplementation implements AppDAO {
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
 		//POSIBLEMENTE DEVUELVE 2 COLUMNAS DE MÁS DE LA TABLA DEL JOIN Y NO PUEDA CONVERTIR
-		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a join cli_app r on a.id_app=r.id_app where id_usuario="+miCliente.getIdUsuario()).list();
+		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a join cli_app r on a.id_app=r.id_app where r.id_usuario="+miCliente.getIdUsuario()).list();
 	}
 
 	@Transactional(value = "miTransactionManager")
@@ -68,8 +67,10 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public List<Cliente> findAllClientes(App miApp) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = sessionFactory.getCurrentSession().createQuery("select c from Cliente c join c.apps r where r.app=:app");
+		q.setEntity("app", miApp);
+
+		return q.list();
 	}
 
 }

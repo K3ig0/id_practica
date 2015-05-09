@@ -1,5 +1,6 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -85,7 +86,7 @@ public class UsuarioImplementation implements UsuarioService {
 				// pass incorrecto
 				log.error("[Error]UsuarioImplementation[autenticarUsuario(<String> login, <String> password)] ==> Datos de acceso incorrectos");
 		}
-		return null; //solo devuelve el usuario si su password es correcto
+		return null; // solo devuelve el usuario si su password es correcto
 	}
 
 	public Usuario buscarUsuarioPorId(Long id) {
@@ -260,8 +261,9 @@ public class UsuarioImplementation implements UsuarioService {
 	public List<App> obtenerAppsProgramador(Programador miProgramador) {
 		List<App> apps = null;
 		if (miProgramador != null) {
-			apps = miProgramador.getApps();
-			log.info("[Info]UsuarioImplementation[obtenerAppsProgramador(<Class> Programador)] ==> Recuperada correctamente la lista de apps del programador: "+miProgramador.toString());
+			apps = appDAO.findAllByProgramador(miProgramador);
+			log.info("[Info]UsuarioImplementation[obtenerAppsProgramador(<Class> Programador)] ==> Recuperada correctamente la lista de apps del programador: "
+					+ miProgramador.toString());
 			return apps;
 		}
 		log.error("[Error]UsuarioImplementation[obtenerAppsProgramador(<Class> Programador)] ==> miProgramador = null");
@@ -271,8 +273,9 @@ public class UsuarioImplementation implements UsuarioService {
 	public List<App> obtenerAppsCliente(Cliente miCliente) {
 		List<App> apps = null;
 		if (miCliente != null) {
-			apps = miCliente.getApps();
-			log.info("[Info]UsuarioImplementation[obtenerAppsCliente(<Class> Cliente)] ==> Recuperada correctamente la lista de appps del cliente: "+miCliente.toString());
+			apps = appDAO.findAllByCliente(miCliente);
+			log.info("[Info]UsuarioImplementation[obtenerAppsCliente(<Class> Cliente)] ==> Recuperada correctamente la lista de appps del cliente: "
+					+ miCliente.toString());
 			return apps;
 		}
 		log.error("[Error]UsuarioImplementation[obtenerAppsCliente(<Class> Cliente)] ==> miCliente = null");
@@ -281,24 +284,45 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public List<Cliente> obtenerClientesApp(App miApp) {
 		List<Cliente> clientes = null;
-		/*if (miApp != null) {
-			Long id_app = miApp.getIdApp(); //necesario para consultar en la tabla N:M clientes-apps
-			clientes = QUERY
-			log.info("[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Recuperada correctamente la lista de clientes para la app: "+miApp.toString());
-			return clientes;
-		}
-		log.error("[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> No se pudo encontrar ningún cliente ligado a la app solicitada");
-		*/
+		// YA HECHO EN EL MÉTODO INFERIOR
+		/*
+		 * if (miApp != null) { Long id_app = miApp.getIdApp(); //necesario para
+		 * consultar en la tabla N:M clientes-apps clientes = QUERY log.info(
+		 * "[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Recuperada correctamente la lista de clientes para la app: "
+		 * +miApp.toString()); return clientes; } log.error(
+		 * "[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> No se pudo encontrar ningún cliente ligado a la app solicitada"
+		 * );
+		 */
 		return clientes;
 	}
 
 	public void cancelarClientes(App miApp) {
 		if (miApp != null) {
-			Long id_app = miApp.getIdApp(); //necesario para consultar en la tabla N:M clientes-apps
-			//clientes = appDAO.findAllClientes(miApp);
-			//quitar la app de la lista del usuario con SetApps, luego hacer usuarioDAO.update() y lanzar un remove de que dicho usuario ya no está ligado a dicha app en cli_app
-			// TODO 
-			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Cancelados los clientes de la app: "+miApp.toString());
+			List<Cliente> clientes = appDAO.findAllClientes(miApp); // esto
+																	// luego
+																	// tiene que
+																	// hacerse
+																	// en el
+																	// MÉTODO DE
+																	// ARRIBA
+
+			// quitar la app de la lista de cada cliente con SetApps, luego
+			// hacer usuarioDAO.update() y lanzar un remove de que dicho usuario
+			// ya no está ligado a dicha app en cli_app
+			for (Cliente c : clientes) { // todos los clientes obtenidos tienen
+											// la app en su lista
+				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
+						+ miApp.toString()
+						+ " para el cliente con id: "
+						+ c.getIdUsuario() + " ...");
+				// c.getApps().remove(0);
+				actualizarUsuario(c);
+				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
+						+ miApp.toString()
+						+ " correctamente para el último cliente");
+			}
+			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
+					+ miApp.toString());
 		}
 		log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
 	}
@@ -357,17 +381,39 @@ public class UsuarioImplementation implements UsuarioService {
 	public List<Version> obtenerListaVersiones(App miApp) {
 		List<Version> versiones = null;
 		if (miApp != null) {
-			versiones = miApp.getVersiones();
-			log.info("[Info]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> Recuperada correctamente la lista de versiones del cliente: "+miApp.toString());
+			versiones = versionDAO.findAllByApp(miApp);
+			log.info("[Info]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> Recuperada correctamente la lista de versiones para la app: "
+					+ miApp.toString());
 			return versiones;
 		}
 		log.error("[Error]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> miApp = null");
 		return versiones;
 	}
 
+	//TODO : logs
 	public Version obtenerUltimaVersion(App miApp) {
-		// TODO Auto-generated method stub
+		if (miApp != null)
+			return obtenerListaVersiones(miApp).get(0);
+	
+		
 		return null;
+		
+		/*List<Version> versiones = obtenerListaVersiones(miApp);
+		Timestamp last = null;
+
+		for (Version v : versiones) {
+			if (last != null) {
+				
+				//si last es un Timestamp más antiguo que el de la versión
+				if (last.compareTo(v.getFechaDePublicacion()) < 0 )
+					last = v.getFechaDePublicacion();
+			}
+			else
+				last = v.getFechaDePublicacion();
+			if (versiones.get(versiones.size()-1) == v)
+				return v;
+		}
+		return null; //no hay versiones para dicha aplicación*/
 	}
 
 }

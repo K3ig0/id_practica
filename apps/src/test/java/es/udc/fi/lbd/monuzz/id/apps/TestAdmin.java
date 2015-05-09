@@ -170,15 +170,16 @@ public class TestAdmin {
 		// T6 Contamos aplicaciones de la categoria
 		
 		Long numApps;
-		/*
+		
+/*//TODO
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat1);
 		assertEquals (new Long(3), numApps);
-*/
+*///TODO
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat11);
 		assertEquals (new Long(2), numApps);
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat12);
 		assertEquals (new Long(1), numApps);
-/*
+/*//TODO
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat2);
 		assertEquals (new Long(1), numApps);
 */
@@ -188,6 +189,8 @@ public class TestAdmin {
 		// T7 Recuperamos aplicaciones de diferentes categorias, por orden de votos (inverso, de más a menos)
 		
 		List<App> listaApps = adminService.buscarAppsCategoria(testUtils.cat1);
+		
+//TODO
 /*	Falla o número de elementos encontrados
 		assertEquals(3, listaApps.size());
 		assertEquals(testUtils.app3, listaApps.get(0));
@@ -228,6 +231,7 @@ public class TestAdmin {
 		
 		// T9 Cambiar categoria de lugar
 		
+//TODO
 /*		Falla modificarCategoria
 		catA1.addSubcategoria(catA2);
 		adminService.modificarCategoria(catA2);

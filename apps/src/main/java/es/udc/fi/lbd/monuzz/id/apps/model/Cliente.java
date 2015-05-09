@@ -50,8 +50,8 @@ public class Cliente extends Usuario {
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable (
 			name="CLI_APP",
-			joinColumns={@JoinColumn(name="id_app")},
-			inverseJoinColumns = {@JoinColumn(name="id_cliente")}
+			joinColumns={@JoinColumn(name="id_cliente")},
+			inverseJoinColumns = {@JoinColumn(name="id_app")}
 			)
 	public List<App> getApps() {
 		return apps;

@@ -3,6 +3,7 @@ package es.udc.fi.lbd.monuzz.id.apps.services;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -296,7 +297,9 @@ public class UsuarioImplementation implements UsuarioService {
 	}
 
 	public void cancelarClientes(App miApp) {
-		if (miApp != null) {
+		if (miApp == null)
+			log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
+		else {
 			List<Cliente> clientes = appDAO.findAllClientes(miApp); // esto
 																	// luego
 																	// tiene que
@@ -314,7 +317,9 @@ public class UsuarioImplementation implements UsuarioService {
 						+ miApp.toString()
 						+ " para el cliente con id: "
 						+ c.getIdUsuario() + " ...");
-				// c.getApps().remove(0);
+				List<App> apps = appDAO.findAllByCliente(c);
+				apps.remove(miApp);  
+				c.setApps(apps);
 				actualizarUsuario(c);
 				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
 						+ miApp.toString()
@@ -323,7 +328,6 @@ public class UsuarioImplementation implements UsuarioService {
 			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
 					+ miApp.toString());
 		}
-		log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
 	}
 
 	public void registrarNuevaVersion(Version miVersion) {

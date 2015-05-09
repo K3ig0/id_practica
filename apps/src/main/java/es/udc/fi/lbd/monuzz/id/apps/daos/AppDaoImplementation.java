@@ -56,7 +56,7 @@ public class AppDaoImplementation implements AppDAO {
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
 		Long id = miCliente.getIdUsuario();
-		Query q = sessionFactory.getCurrentSession().createQuery("select a from " + App.class.getName() + " a where id_app in (select r.idApp from " + Cliente.class.getName() + " c join c.apps r where c.idUsuario = :id)");
+		Query q = sessionFactory.getCurrentSession().createQuery("select a from App a where id_app in (select r.idApp from Cliente c join c.apps r where c.idUsuario = :id)");
 		q.setLong("id", id);
 
 		return q.list();
@@ -70,8 +70,9 @@ public class AppDaoImplementation implements AppDAO {
 
 	@Transactional(value = "miTransactionManager")
 	public List<Cliente> findAllClientes(App miApp) {
-		Query q = sessionFactory.getCurrentSession().createQuery("select c from " + Cliente.class.getName() + " c join c.apps r where r.app=:app");
-		q.setEntity("app", miApp);
+		Long id = miApp.getIdApp();
+		Query q = sessionFactory.getCurrentSession().createQuery("select c from Cliente c join c.apps r where r.idApp=:id");
+		q.setLong("id", id);
 
 		return q.list();
 	}

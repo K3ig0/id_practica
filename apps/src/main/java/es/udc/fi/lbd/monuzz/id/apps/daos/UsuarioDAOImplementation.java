@@ -28,7 +28,7 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 
 	@Transactional(value="miTransactionManager")
 	public void remove(Usuario miUsuario) {
-
+		
 		sessionFactory.getCurrentSession().delete(miUsuario);
 	}
 

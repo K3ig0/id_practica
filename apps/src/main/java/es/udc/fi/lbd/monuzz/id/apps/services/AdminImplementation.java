@@ -229,7 +229,6 @@ public class AdminImplementation implements AdminService {
 	}
 
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
 		Long n = null;
 		try {
 			if (miCategoria != null) {
@@ -249,7 +248,18 @@ public class AdminImplementation implements AdminService {
 	}
 
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		List<App> apps = null;
+		try {
+			if (miCategoria != null) {
+				apps = categoriaDAO.getApps(miCategoria);
+				log.info("[Info]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> Lista de Apps encontrada correctamente");
+			} else
+				log.error("[Error]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> categoria = null");
+		} catch (DataAccessException e) {
+			log.error("[Error]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> No se pudo encontrar ninguna App con la categoría "
+					+ miCategoria.toString());
+			throw e;
+		}
+		return apps;
 	}
 }

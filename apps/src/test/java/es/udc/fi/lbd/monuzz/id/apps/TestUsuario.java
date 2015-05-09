@@ -149,7 +149,7 @@ public class TestUsuario {
 
 	@Test
 	public void testProgramadorCliente() {
-	
+/*	
 		// T1 Añadir nueva aplicación con su version inicial. Añadir segunda versión
 		
 		App miApp = new App("AppTest", new Timestamp(Calendar.getInstance().getTimeInMillis()), new Float(0), testUtils.programador1, testUtils.cat11, testUtils.tipoFreeware);
@@ -194,7 +194,7 @@ public class TestUsuario {
 		try { usuarioService.borrarVersion(miVersion); }
 			catch (Exception e) {ultimaVersion=true;}
 		assertTrue(ultimaVersion);
-/*	
+	
 		// T6 Fallar al dar de baja aplicacion con clientes
 		
 		testUtils.cliente1.getApps().add(miApp);
@@ -232,7 +232,7 @@ public class TestUsuario {
 		usuarioService.cancelarClientes(miApp);
 		assertEquals (1, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (0, usuarioService.obtenerClientesApp(miApp).size());
-*/		
+		
 		// T10 Eliminar app sin clientes (y sus versiones)
 		
 		usuarioService.borrarApp(miApp);
@@ -240,7 +240,7 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarAppPorTitulo(miApp.getTitulo()));
 		assertNull(usuarioService.BuscarVersionPorId(miVersion.getIdVersion()));
 		
-	}
+*/	}
 
 		
 

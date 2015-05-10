@@ -29,7 +29,6 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	public void remove(Categoria miCategoria) {
 
 		sessionFactory.getCurrentSession().delete(miCategoria);	
-		sessionFactory.getCurrentSession().clear();
 	}
 
 	@Transactional(value="miTransactionManager")

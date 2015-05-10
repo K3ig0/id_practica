@@ -48,9 +48,9 @@ public class TestUsuario {
 		log.info ("Datos eliminados con éxito");
 	}
 	
-	//@Test
+	@Test
 	public void testBasicoUsuario() {
-		
+/*		
 		// T1. Crear usuario y registrarlo 
 		Programador miProgramador = new Programador("programadorTest", "test13", "Nikito", "Nipongo", "Camacho", "Nikito Nipongo");
 		usuarioService.registrarNuevoUsuario(miProgramador);		
@@ -131,7 +131,7 @@ public class TestUsuario {
 		assertEquals(testUtils.cliente2, miListaU.get(2));
 		assertEquals(testUtils.programador2, miListaU.get(3));
 		miListaU.clear();
-*/
+*//*
 		List<Cliente> miListaC = usuarioService.obtenerListaClientes();
 		assertEquals(2, miListaC.size());
 		assertEquals(testUtils.cliente1, miListaC.get(0));
@@ -143,11 +143,11 @@ public class TestUsuario {
 		assertEquals(testUtils.programador1, miListaP.get(0));
 		assertEquals(testUtils.programador2, miListaP.get(1));
 		miListaP.clear();
-
+*/
 		}
 
 
-	@Test
+	//@Test
 	public void testProgramadorCliente() {
 /*	
 		// T1 Añadir nueva aplicación con su version inicial. Añadir segunda versión

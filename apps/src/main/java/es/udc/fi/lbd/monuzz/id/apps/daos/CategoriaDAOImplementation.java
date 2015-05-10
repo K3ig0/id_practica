@@ -58,6 +58,11 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
+		// Subcategorías directas (1 nivel)
+/*		
+		return sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where id_categoria_madre is not null order by nombre").list();
+*/		
+		// N niveles 
 		Long id=miCategoria.getIdCategoria();
 		String q_str = 
 				"with recursive rcat as ( "+

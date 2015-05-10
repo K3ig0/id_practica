@@ -53,7 +53,7 @@ public class Categoria {
 		return madre;
 	}
 	
-	@OneToMany(mappedBy="madre", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy="madre", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	public Set<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

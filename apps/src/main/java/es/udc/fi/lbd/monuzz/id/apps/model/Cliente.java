@@ -47,7 +47,7 @@ public class Cliente extends Usuario {
 		return saldo;
 	}
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinTable (
 			name="CLI_APP",
 			joinColumns={@JoinColumn(name="id_cliente")},

@@ -284,50 +284,40 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public List<Cliente> obtenerClientesApp(App miApp) {
 		List<Cliente> clientes = null;
-		// YA HECHO EN EL MÉTODO INFERIOR
-		/*
-		 * if (miApp != null) { Long id_app = miApp.getIdApp(); //necesario para
-		 * consultar en la tabla N:M clientes-apps clientes = QUERY log.info(
-		 * "[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Recuperada correctamente la lista de clientes para la app: "
-		 * +miApp.toString()); return clientes; } log.error(
-		 * "[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> No se pudo encontrar ningún cliente ligado a la app solicitada"
-		 * );
-		 */
+		if (miApp == null)
+			log.error("[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> miApp = null");
+		else {
+			clientes = appDAO.findAllClientes(miApp);
+			log.info("[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Obtenidos los clientes para la app: "+miApp.toString());
+		}
 		return clientes;
 	}
 
 	public void cancelarClientes(App miApp) {
-		if (miApp == null)
-			log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
-		else {
-			List<Cliente> clientes = appDAO.findAllClientes(miApp); // esto
-																	// luego
-																	// tiene que
-																	// hacerse
-																	// en el
-																	// MÉTODO DE
-																	// ARRIBA
+		List<Cliente> clientes = obtenerClientesApp(miApp); 
 
 			// quitar la app de la lista de cada cliente con SetApps, luego
 			// hacer usuarioDAO.update() y lanzar un remove de que dicho usuario
 			// ya no está ligado a dicha app en cli_app
-			for (Cliente c : clientes) { // todos los clientes obtenidos tienen
-											// la app en su lista
-				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
-						+ miApp.toString()
-						+ " para el cliente con id: "
-						+ c.getIdUsuario() + " ...");
-				List<App> apps = appDAO.findAllByCliente(c);
-				apps.remove(miApp);  
-				c.setApps(apps);
-				actualizarUsuario(c);
-				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
-						+ miApp.toString()
-						+ " correctamente para el último cliente");
-			}
-			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
-					+ miApp.toString());
+		for (Cliente c : clientes) { // todos los clientes obtenidos tienen
+										// la app en su lista
+			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
+					+ miApp.toString()
+					+ " para el cliente con id: "
+					+ c.getIdUsuario() + " ...");	
+			
+			List<App> apps = appDAO.findAllByCliente(c);
+			apps.remove(miApp);
+			c.setApps(apps);
+			//c.getApps().remove(miApp); si fuese eager la n:m y no harían falta las tres líneas superiores
+			usuarioDAO.update(c);
+			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
+					+ miApp.toString()
+					+ " correctamente para el último cliente");
 		}
+		log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
+				+ miApp.toString());
+		
 	}
 
 	public void registrarNuevaVersion(Version miVersion) {

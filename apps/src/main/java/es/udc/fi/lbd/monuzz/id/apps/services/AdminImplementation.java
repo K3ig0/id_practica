@@ -109,14 +109,14 @@ public class AdminImplementation implements AdminService {
 		return tipoApps;
 	}
 
-	// Implementado para N niveles
 	public void registrarNuevaCategoria(Categoria miCategoria) {
 		try {
 			if (miCategoria != null) {
 				categoriaDAO.create(miCategoria);
 				log.info("[Info]AdminImplementation[registrarNuevaCategoria(<Clase> categoria)] ==> Registrada la categoría: "
 						+ miCategoria.toString());
-
+				
+				//CascadeType.PERSIST manualmente (creación)
 				Set<Categoria> subCategorias = miCategoria.getSubcategorias();
 
 				if (!subCategorias.isEmpty())
@@ -255,7 +255,6 @@ public class AdminImplementation implements AdminService {
 
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {
 		List<App> apps = null;
-		List<App> apps_votos_desc = null;
 		try {
 			if (miCategoria != null) {
 				apps = categoriaDAO.getApps(miCategoria);

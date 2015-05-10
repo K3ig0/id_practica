@@ -226,18 +226,17 @@ public class TestAdmin {
 		adminService.modificarCategoria(catA);
 		assertEquals (catA, adminService.buscarCategoriaPorNombre(catA.getNombre()));
 		
-		// T9 Cambiar categoria de lugar
 		
-//TODO
-/*		Falla modificarCategoria
+		// T9 Cambiar categoria de lugar
+				
 		catA1.addSubcategoria(catA2);
 		adminService.modificarCategoria(catA2);
 		assertEquals (catA1, adminService.buscarCategoriaPorId(catA2.getIdCategoria()).getmadre());
-		assertEquals(1, adminService.buscarSubcategorias(catA).size());
+		//assertEquals(1, adminService.buscarSubcategorias(catA).size());
 		assertEquals(1, adminService.buscarSubcategorias(catA1).size());
 		assertEquals(0, adminService.buscarSubcategorias(catA2).size());
 		
-*/		
+		
 		// T10 Intentamos borrar una categoria con apps 
 		
 		Boolean noBorrada=false;

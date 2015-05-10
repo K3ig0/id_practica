@@ -55,7 +55,7 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 	@Transactional(value="miTransactionManager")
 	public List<Usuario> findAll() {
 		
-		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName()).list();
+		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName() + " order by ap1,ap2,nombre,usuario").list();
 	}
 
 	@Transactional(value="miTransactionManager")

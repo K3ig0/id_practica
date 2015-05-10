@@ -48,7 +48,7 @@ public class TestUsuario {
 		log.info ("Datos eliminados con éxito");
 	}
 	
-	//@Test
+	@Test
 	public void testBasicoUsuario() {
 		
 		// T1. Crear usuario y registrarlo 
@@ -123,7 +123,7 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarUsuarioPorLogin(miProgramadorAutenticado.getNombreDeUsuario()));
 		
 		// T7 Probar listado de usuarios
-/*		
+		
 		List<Usuario> miListaU = usuarioService.obtenerListaUsuarios();
 		assertEquals(4, miListaU.size());
 		assertEquals(testUtils.cliente1, miListaU.get(0));
@@ -131,7 +131,7 @@ public class TestUsuario {
 		assertEquals(testUtils.cliente2, miListaU.get(2));
 		assertEquals(testUtils.programador2, miListaU.get(3));
 		miListaU.clear();
-*/
+
 		List<Cliente> miListaC = usuarioService.obtenerListaClientes();
 		assertEquals(2, miListaC.size());
 		assertEquals(testUtils.cliente1, miListaC.get(0));
@@ -146,7 +146,7 @@ public class TestUsuario {
 
 		}
 
-//test superior COMENTADO
+
 	@Test
 	public void testProgramadorCliente() {
 	

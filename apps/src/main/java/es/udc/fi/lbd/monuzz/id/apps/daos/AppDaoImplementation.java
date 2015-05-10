@@ -47,12 +47,14 @@ public class AppDaoImplementation implements AppDAO {
 		return (App) q.uniqueResult();
 	}
 
+	//ni usado ni testeado
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByProgramador(Programador miProgramador) {
 		
 		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where id_programador="+miProgramador.getIdUsuario()).list();
 	}
-
+	//
+	
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
 		Long id = miCliente.getIdUsuario();
@@ -62,12 +64,15 @@ public class AppDaoImplementation implements AppDAO {
 		return q.list();
 	}
 
+	//no usado
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a where a.categoria = :c");
+		q.setEntity("c", miCategoria);
+		return q.list();
 	}
-
+	//
+	
 	@Transactional(value = "miTransactionManager")
 	public List<Cliente> findAllClientes(App miApp) {
 		Long id = miApp.getIdApp();

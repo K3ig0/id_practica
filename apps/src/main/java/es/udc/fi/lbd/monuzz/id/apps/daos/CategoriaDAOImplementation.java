@@ -34,7 +34,7 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	@Transactional(value="miTransactionManager")
 	public void update(Categoria miCategoria) {
 
-		sessionFactory.getCurrentSession().save(miCategoria);			
+		sessionFactory.getCurrentSession().update(miCategoria);			
 	}
 
 	@Transactional(value="miTransactionManager")

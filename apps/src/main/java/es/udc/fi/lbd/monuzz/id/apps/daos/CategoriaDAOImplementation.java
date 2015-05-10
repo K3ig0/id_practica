@@ -85,13 +85,16 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	@Transactional(value="miTransactionManager")
 	public Long getNumApps(Categoria miCategoria) {
 		
-		return (Long) sessionFactory.getCurrentSession().createQuery("select count(*) from " + App.class.getName() + " where id_categoria=" + miCategoria.getIdCategoria()).uniqueResult();
+		Query q = sessionFactory.getCurrentSession().createQuery("select count(*) from " + App.class.getName() + " a where a.categoria = :c");
+		q.setEntity("c", miCategoria);
+		return (Long) q.uniqueResult();
 	}
 
 	@Transactional(value="miTransactionManager")
 	public List<App> getApps(Categoria miCategoria) {
-		
-		return sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " where id_categoria=" + miCategoria.getIdCategoria()).list();
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a where a.categoria = :c");
+		q.setEntity("c", miCategoria);
+		return q.list();
 	}
 
 }

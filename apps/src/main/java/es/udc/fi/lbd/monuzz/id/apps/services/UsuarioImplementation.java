@@ -1,5 +1,6 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -177,6 +178,10 @@ public class UsuarioImplementation implements UsuarioService {
 				appDAO.create(miApp);
 				log.info("[Info]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> Registrada la app: "
 						+ miApp.toString());
+				/*for (Version v : miApp.getVersiones()) { //cascade persist manual para las versiones
+					if (!obtenerListaVersiones(miApp).contains(v))
+						registrarNuevaVersion(v);
+				}*/
 			} else
 				log.error("[Error]UsuarioImplementation[registrarNuevoApp(<Clase> App)] ==> app = null");
 		} catch (DataAccessException e) {
@@ -202,8 +207,32 @@ public class UsuarioImplementation implements UsuarioService {
 	public void borrarApp(App miApp) {
 		try {
 			if (miApp != null) {
+				/*for (Version v : miApp.getVersiones())  //cascade remove manual para las versiones
+					borrarVersion(v);*/
+				
 				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrando la app: "
 						+ miApp.toString() + " ...");
+				
+				
+				/*
+				////para comprobar si soluciona StaleException (hibernate espera lo que no hay en la BD, podría solucionarse en otros gestores mediante SET NOCOUNT ON)
+				List<Version> versiones=new ArrayList<Version>();
+				versiones=miApp.getVersiones();
+				if (versiones != null) {
+					if (!miApp.getVersiones().isEmpty()) {
+						//
+						miApp.setVersiones(null); 
+						appDAO.update(miApp); // para actualizar las versiones 
+						//
+					}
+					for (Version v : versiones) {
+						v.setApp(null);
+						versionDAO.update(v);
+					}
+				}
+				//
+				*/
+				
 				appDAO.remove(miApp);
 				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> ...App borrada satisfactoriamente");
 			} else
@@ -388,7 +417,7 @@ public class UsuarioImplementation implements UsuarioService {
 	//TODO : logs
 	public Version obtenerUltimaVersion(App miApp) {
 		if (miApp != null)
-			return obtenerListaVersiones(miApp).get(0);
+			return obtenerListaVersiones(miApp).get(0); //la más reciente pues se devuelven ordenadas
 	
 		
 		return null;

@@ -1,5 +1,7 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -229,18 +231,22 @@ public class AdminImplementation implements AdminService {
 	}
 
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
-		Long n = null;
+		Long n = new Long(0);
 		try {
 			if (miCategoria != null) {
-				n = categoriaDAO.getNumApps(miCategoria);
+				List<Categoria> subcategorias = categoriaDAO.findSubcategories(miCategoria);
+				if (!subcategorias.isEmpty())
+					for (Categoria c : subcategorias)
+						n += categoriaDAO.getNumApps(c);
+				else
+					n = categoriaDAO.getNumApps(miCategoria);
+				
 				log.info("[Info]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> Número de Apps de la categoría "
 						+ miCategoria.toString() + " encontradas con éxito");
-				log.info("[Info]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> BORRAR. numero de apps encontradas = "
-						+ n.toString());
 			} else
 				log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> categoria = null");
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> No se pudo calcular el número de Apps de la categoría "
+			log.error("[Error]AdminImplementation[calcularNumAppsCategorias(<Clase> categoria)] ==> No se pudo calcular el número de Apps para la categoría "
 					+ miCategoria.toString());
 			throw e;
 		}
@@ -249,17 +255,35 @@ public class AdminImplementation implements AdminService {
 
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {
 		List<App> apps = null;
+		List<App> apps_votos_desc = null;
 		try {
 			if (miCategoria != null) {
 				apps = categoriaDAO.getApps(miCategoria);
-				log.info("[Info]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> Lista de Apps encontrada correctamente");
+				List<Categoria> subcategorias = categoriaDAO.findSubcategories(miCategoria);
+				if (!subcategorias.isEmpty())
+					for (Categoria c : subcategorias) {
+						List<App> apps_subcat = categoriaDAO.getApps(c);
+						for (App a : apps_subcat) //se añade la app de cada subcategoría
+							apps.add(a);
+					}
+				log.info("[Info]AdminImplementation[buscarAppsCategorias(<Clase> categoria)] ==> Apps de la categoría "
+						+ miCategoria.toString() + " encontradas con éxito");
 			} else
-				log.error("[Error]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> categoria = null");
+				log.error("[Error]AdminImplementation[buscarAppsCategorias(<Clase> categoria)] ==> categoria = null");
 		} catch (DataAccessException e) {
-			log.error("[Error]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> No se pudo encontrar ninguna App con la categoría "
+			log.error("[Error]AdminImplementation[buscarAppsCategoria(<Clase> categoria)] ==> No se pudo encontrar ninguna app para la categoría "
 					+ miCategoria.toString());
 			throw e;
 		}
+		//ordenar por votos en orden descendiente (mejor sería hacer una consulta recursiva como la de findSubcategorias que
+		 // obtuviese las apps de cada categoría y sus subcategorías y ordenarlo ya por votos en orden descendiente en la consulta)
+		    Collections.sort(apps, new Comparator<App>() {
+		        @Override
+		        public int compare(final App a1, final App a2) {
+		            return a2.getVotos().compareTo(a1.getVotos());
+		        }
+		       } );
+				
 		return apps;
 	}
 }

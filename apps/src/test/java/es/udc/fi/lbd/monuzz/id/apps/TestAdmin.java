@@ -171,18 +171,18 @@ public class TestAdmin {
 		
 		Long numApps;
 		
-/*//TODO
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat1);
 		assertEquals (new Long(3), numApps);
-*///TODO
+
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat11);
 		assertEquals (new Long(2), numApps);
+		
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat12);
 		assertEquals (new Long(1), numApps);
-/*//TODO
+		
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat2);
 		assertEquals (new Long(1), numApps);
-*/
+		
 		numApps = adminService.calcularNumAppsCategoria(catA);
 		assertEquals (new Long(0), numApps);
 		
@@ -190,8 +190,6 @@ public class TestAdmin {
 		
 		List<App> listaApps = adminService.buscarAppsCategoria(testUtils.cat1);
 		
-//TODO
-/*	Falla o número de elementos encontrados
 		assertEquals(3, listaApps.size());
 		assertEquals(testUtils.app3, listaApps.get(0));
 		assertEquals(testUtils.app1, listaApps.get(1));
@@ -213,7 +211,6 @@ public class TestAdmin {
 		assertEquals(1, listaApps.size());
 		assertEquals(testUtils.app4, listaApps.get(0));
 		listaApps.clear();
- */
 		
 		listaApps = adminService.buscarAppsCategoria(testUtils.cat21);
 		assertEquals(1, listaApps.size());

@@ -37,7 +37,7 @@ public class Programador extends Usuario {
 		return numVotos;
 	}
 	
-	@OneToMany(mappedBy="autor",fetch=FetchType.LAZY, cascade={CascadeType.PERSIST})
+	@OneToMany(mappedBy="autor",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	public List<App> getApps() {
 		return apps;
 	}

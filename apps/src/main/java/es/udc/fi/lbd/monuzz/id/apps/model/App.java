@@ -87,7 +87,8 @@ public class App  {
 		return tipoApp;
 	}
 	
-	@OneToMany(mappedBy="app", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	 //si ponemos CascadeType.PERSIST no las crea en la BD, solo funciona con ALL 		o.O
+	@OneToMany(mappedBy="app",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public List<Version> getVersiones() {
 		return versiones;
 	}

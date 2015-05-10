@@ -48,9 +48,9 @@ public class TestUsuario {
 		log.info ("Datos eliminados con éxito");
 	}
 	
-	@Test
+	//@Test
 	public void testBasicoUsuario() {
-/*		
+		
 		// T1. Crear usuario y registrarlo 
 		Programador miProgramador = new Programador("programadorTest", "test13", "Nikito", "Nipongo", "Camacho", "Nikito Nipongo");
 		usuarioService.registrarNuevoUsuario(miProgramador);		
@@ -131,7 +131,7 @@ public class TestUsuario {
 		assertEquals(testUtils.cliente2, miListaU.get(2));
 		assertEquals(testUtils.programador2, miListaU.get(3));
 		miListaU.clear();
-*//*
+*/
 		List<Cliente> miListaC = usuarioService.obtenerListaClientes();
 		assertEquals(2, miListaC.size());
 		assertEquals(testUtils.cliente1, miListaC.get(0));
@@ -143,13 +143,13 @@ public class TestUsuario {
 		assertEquals(testUtils.programador1, miListaP.get(0));
 		assertEquals(testUtils.programador2, miListaP.get(1));
 		miListaP.clear();
-*/
+
 		}
 
-
-	//@Test
+//test superior COMENTADO
+	@Test
 	public void testProgramadorCliente() {
-/*	
+	
 		// T1 Añadir nueva aplicación con su version inicial. Añadir segunda versión
 		
 		App miApp = new App("AppTest", new Timestamp(Calendar.getInstance().getTimeInMillis()), new Float(0), testUtils.programador1, testUtils.cat11, testUtils.tipoFreeware);
@@ -182,7 +182,7 @@ public class TestUsuario {
 
 		// T4 Dar de baja versión
 		
-		usuarioService.borrarVersion(miVersion2);
+	/*	usuarioService.borrarVersion(miVersion2);
 		miLista = usuarioService.obtenerListaVersiones(miApp);
 		assertEquals(1, miLista.size());
 		assertEquals (miVersion, miLista.get(0));
@@ -232,7 +232,7 @@ public class TestUsuario {
 		usuarioService.cancelarClientes(miApp);
 		assertEquals (1, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (0, usuarioService.obtenerClientesApp(miApp).size());
-		
+	*/	
 		// T10 Eliminar app sin clientes (y sus versiones)
 		
 		usuarioService.borrarApp(miApp);
@@ -240,7 +240,7 @@ public class TestUsuario {
 		assertNull(usuarioService.buscarAppPorTitulo(miApp.getTitulo()));
 		assertNull(usuarioService.BuscarVersionPorId(miVersion.getIdVersion()));
 		
-*/	}
+	}
 
 		
 

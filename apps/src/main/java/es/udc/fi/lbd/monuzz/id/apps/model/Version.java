@@ -33,7 +33,7 @@ public class Version {
 		this.fechaDePublicacion = fechaDePublicacion;
 		app.getVersiones().add(this);
 		this.app = app;
-		app.getVersiones().add(this);
+		//app.getVersiones().add(this);
 	}
 
 	@Id
@@ -54,7 +54,7 @@ public class Version {
 		return fechaDePublicacion;
 	}
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_app")
 	public App getApp() {
 		return app;

@@ -33,6 +33,7 @@ public class AppDaoImplementation implements AppDAO {
 	@Transactional(value = "miTransactionManager")
 	public void remove(App miApp) {
 		sessionFactory.getCurrentSession().delete(miApp);
+		sessionFactory.getCurrentSession().clear();
 	}
 
 	@Transactional(value = "miTransactionManager")

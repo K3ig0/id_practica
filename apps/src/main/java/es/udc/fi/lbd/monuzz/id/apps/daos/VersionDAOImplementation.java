@@ -34,6 +34,7 @@ public class VersionDAOImplementation implements VersionDAO {
 	public void remove(Version miVersion) {
 
 		sessionFactory.getCurrentSession().delete(miVersion);
+		sessionFactory.getCurrentSession().clear();
 	}
 
 	@Transactional(value = "miTransactionManager")

@@ -25,7 +25,8 @@ public class TipoAppDAOImplementation implements TipoAppDAO {
 	@Transactional(value="miTransactionManager")
 	public void remove(TipoApp miTipo) {
 
-		sessionFactory.getCurrentSession().delete(miTipo);		
+		sessionFactory.getCurrentSession().delete(miTipo);
+		sessionFactory.getCurrentSession().clear();
 	}
 
 	@Transactional(value="miTransactionManager")

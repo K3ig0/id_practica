@@ -47,7 +47,6 @@ public class AppDaoImplementation implements AppDAO {
 		return (App) q.uniqueResult();
 	}
 
-	//ni usado ni testeado
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByProgramador(Programador miProgramador) {
 		Query q = sessionFactory.getCurrentSession().createQuery("select a from " + App.class.getName() + " a where a.autor = :p");

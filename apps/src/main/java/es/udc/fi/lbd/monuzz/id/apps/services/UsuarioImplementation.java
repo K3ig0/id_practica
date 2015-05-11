@@ -204,32 +204,9 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public void borrarApp(App miApp) {
 		try {
-			if (miApp != null) {
-				/*for (Version v : miApp.getVersiones())  //cascade remove manual para las versiones
-					borrarVersion(v);*/
-				
+			if (miApp != null) {				
 				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrando la app: "
 						+ miApp.toString() + " ...");
-				
-				/*
-				////para comprobar si soluciona StaleException (hibernate espera lo que no hay en la BD, podría solucionarse en otros gestores mediante SET NOCOUNT ON)
-				List<Version> versiones=new ArrayList<Version>();
-				versiones=miApp.getVersiones();
-				if (versiones != null) {
-					if (!miApp.getVersiones().isEmpty()) {
-						//
-						miApp.setVersiones(null); 
-						appDAO.update(miApp); // para actualizar las versiones 
-						//
-					}
-					for (Version v : versiones) {
-						v.setApp(null);
-						versionDAO.update(v);
-					}
-				}
-				//
-				*/
-				
 				appDAO.remove(miApp);
 				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> ...App borrada satisfactoriamente");
 			} else
@@ -369,6 +346,7 @@ public class UsuarioImplementation implements UsuarioService {
 				if (versiones.size() == 1)
 					throw new RuntimeException("No se puede borrar la última versión para una app");
 				
+				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> Borrando la versión: " + miVersion.toString());
 				versiones.remove(miVersion);
 				miApp.setVersiones(versiones);
 				appDAO.update(miApp);

@@ -57,7 +57,7 @@ public class TestUsuario {
 		assertNotNull(miProgramador.getIdUsuario());
 		assertEquals(miProgramador, (Programador) usuarioService.buscarUsuarioPorId(miProgramador.getIdUsuario()));
 		assertEquals(miProgramador, (Programador) usuarioService.buscarUsuarioPorLogin(miProgramador.getNombreDeUsuario()));
-	
+		
 		Cliente miCliente = new Cliente ("clienteTest", "test13", "Nokito", "Nada", "Nada", "Nokito Nada", "Premium", new Float(5000));
 		usuarioService.registrarNuevoUsuario(miCliente);		
 		assertNotNull(miCliente.getIdUsuario());
@@ -67,9 +67,7 @@ public class TestUsuario {
 
 
 		// T2. Registrar usuario duplicado
-		//Programador miProgramador2 = new Programador("programadorTest", "test13", "Nikito", "Nipongo", "Camacho", "Nikito Nipongo");
 		Boolean duplicado=false;
-		System.out.println(miProgramador.toString());
 		try {usuarioService.registrarNuevoUsuario(miProgramador);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
@@ -131,7 +129,7 @@ public class TestUsuario {
 		assertEquals(testUtils.cliente2, miListaU.get(2));
 		assertEquals(testUtils.programador2, miListaU.get(3));
 		miListaU.clear();
-
+		
 		List<Cliente> miListaC = usuarioService.obtenerListaClientes();
 		assertEquals(2, miListaC.size());
 		assertEquals(testUtils.cliente1, miListaC.get(0));
@@ -144,7 +142,7 @@ public class TestUsuario {
 		assertEquals(testUtils.programador2, miListaP.get(1));
 		miListaP.clear();
 
-		}
+	}
 
 
 	@Test
@@ -179,7 +177,7 @@ public class TestUsuario {
 		usuarioService.actualizarApp(miApp);
 		assertEquals(miApp.getTitulo(), usuarioService.buscarAppPorId(miApp.getIdApp()).getTitulo());
 		assertEquals(miApp.getVotos(), usuarioService.buscarAppPorId(miApp.getIdApp()).getVotos());
-
+		
 		// T4 Dar de baja versión
 		
 		usuarioService.borrarVersion(miVersion2);
@@ -194,8 +192,7 @@ public class TestUsuario {
 		try { usuarioService.borrarVersion(miVersion); }
 			catch (Exception e) {ultimaVersion=true;}
 		assertTrue(ultimaVersion);
-		
-		/*
+	
 		// T6 Fallar al dar de baja aplicacion con clientes
 		
 		testUtils.cliente1.getApps().add(miApp);
@@ -207,6 +204,7 @@ public class TestUsuario {
 		catch (DataIntegrityViolationException e) { appConClientes=true;}
 		assertTrue (appConClientes);
         
+		
 		// T7 Fallar al dar de baja programador con apps
 		
 		Boolean progConApps=false;
@@ -232,7 +230,7 @@ public class TestUsuario {
 		usuarioService.cancelarClientes(miApp);
 		assertEquals (1, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (0, usuarioService.obtenerClientesApp(miApp).size());
-	*/	
+		
 		// T10 Eliminar app sin clientes (y sus versiones)
 		
 		usuarioService.borrarApp(miApp);

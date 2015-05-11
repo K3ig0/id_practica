@@ -25,14 +25,6 @@ public class TestUtils {
 	public Categoria cat1;
 	public Categoria cat11;
 	public Categoria cat12;
-	//borrar
-	/*
-	public Categoria cat111;
-	public Categoria cat121;
-	public Categoria cat122;
-	//
-	*/
-	
 	public Categoria cat2;
 	public Categoria cat21;
 	public Categoria cat22;
@@ -73,20 +65,12 @@ public class TestUtils {
 		cat1  = new Categoria("Categoria 1");
 		cat11 = new Categoria("Categoria 1.1");
 		cat12 = new Categoria("Categoria 1.2");
-		/*borrar
-		cat111 = new Categoria("Categoria 1.1.1");
-		cat121 = new Categoria("Categoria 1.2.1");
-		cat122 = new Categoria("Categoria 1.2.2");
-		*/
 		cat2  = new Categoria("Categoria 2");
 		cat21 = new Categoria("Categoria 2.1");
 		cat22 = new Categoria("Categoria 2.2");
 		
 		cat1.addSubcategoria(cat11);
 		cat1.addSubcategoria(cat12);
-		/*cat11.addSubcategoria(cat111);
-		cat12.addSubcategoria(cat121);
-		cat12.addSubcategoria(cat122);*/
 		cat2.addSubcategoria(cat21);
 		cat2.addSubcategoria(cat22);
 		
@@ -150,6 +134,7 @@ public class TestUtils {
 
 
 		
+
 		usuarioService.cancelarClientes(app1);
 		usuarioService.cancelarClientes(app2);
 		usuarioService.cancelarClientes(app3);
@@ -174,7 +159,7 @@ public class TestUtils {
 		adminService.borrarTipoApp(tipoPayware); 
 		
 		/* Borramos categorías principales. Asumimos propagación del borrado para el resto */		
-		
+	
 		adminService.borrarCategoria(cat1);
 		adminService.borrarCategoria(cat2);
 		

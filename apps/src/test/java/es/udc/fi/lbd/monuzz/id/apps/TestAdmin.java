@@ -170,26 +170,20 @@ public class TestAdmin {
 		// T6 Contamos aplicaciones de la categoria
 		
 		Long numApps;
-		
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat1);
 		assertEquals (new Long(3), numApps);
-
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat11);
 		assertEquals (new Long(2), numApps);
-		
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat12);
 		assertEquals (new Long(1), numApps);
-		
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat2);
 		assertEquals (new Long(1), numApps);
-		
 		numApps = adminService.calcularNumAppsCategoria(catA);
 		assertEquals (new Long(0), numApps);
-		
+
 		// T7 Recuperamos aplicaciones de diferentes categorias, por orden de votos (inverso, de más a menos)
 		
 		List<App> listaApps = adminService.buscarAppsCategoria(testUtils.cat1);
-		
 		assertEquals(3, listaApps.size());
 		assertEquals(testUtils.app3, listaApps.get(0));
 		assertEquals(testUtils.app1, listaApps.get(1));
@@ -226,16 +220,14 @@ public class TestAdmin {
 		adminService.modificarCategoria(catA);
 		assertEquals (catA, adminService.buscarCategoriaPorNombre(catA.getNombre()));
 		
-		
 		// T9 Cambiar categoria de lugar
-				
+		
 		catA1.addSubcategoria(catA2);
 		adminService.modificarCategoria(catA2);
 		assertEquals (catA1, adminService.buscarCategoriaPorId(catA2.getIdCategoria()).getmadre());
 		assertEquals(1, adminService.buscarSubcategorias(catA).size());
 		assertEquals(1, adminService.buscarSubcategorias(catA1).size());
 		assertEquals(0, adminService.buscarSubcategorias(catA2).size());
-		
 		
 		// T10 Intentamos borrar una categoria con apps 
 		
@@ -246,7 +238,7 @@ public class TestAdmin {
 			noBorrada=true;
 		}
 		assertTrue(noBorrada);
-		
+
 		// T11 Borramos categoria (y subcategorias) sin apps 
 
 		adminService.borrarCategoria(catA);

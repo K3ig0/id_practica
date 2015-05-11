@@ -232,7 +232,7 @@ public class TestAdmin {
 		catA1.addSubcategoria(catA2);
 		adminService.modificarCategoria(catA2);
 		assertEquals (catA1, adminService.buscarCategoriaPorId(catA2.getIdCategoria()).getmadre());
-		//assertEquals(1, adminService.buscarSubcategorias(catA).size());
+		assertEquals(1, adminService.buscarSubcategorias(catA).size());
 		assertEquals(1, adminService.buscarSubcategorias(catA1).size());
 		assertEquals(0, adminService.buscarSubcategorias(catA2).size());
 		

@@ -59,11 +59,12 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
 		// Subcategorías directas (1 nivel)
-/*		
-		return sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where id_categoria_madre is not null order by nombre").list();
-*/		
+		
+		Query q = sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " c where id_categoria_madre is not null and c.madre = :m order by nombre");
+		q.setEntity("m", miCategoria);
+		return q.list();
 		// N niveles 
-		Long id=miCategoria.getIdCategoria();
+/*		Long id=miCategoria.getIdCategoria();
 		String q_str = 
 				"with recursive rcat as ( "+
 					"select * "+				
@@ -85,7 +86,7 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 			subCategorias.add(subCat);
 		}
 		 return subCategorias;
-	}
+*/	}
 
 	@Transactional(value="miTransactionManager")
 	public Long getNumApps(Categoria miCategoria) {

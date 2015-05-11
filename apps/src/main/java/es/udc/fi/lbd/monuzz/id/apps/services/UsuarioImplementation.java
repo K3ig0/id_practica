@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.daos.AppDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.UsuarioDAO;
@@ -30,6 +31,8 @@ public class UsuarioImplementation implements UsuarioService {
 	@Autowired
 	private VersionDAO versionDAO;
 
+	
+	@Transactional(value = "miTransactionManager")
 	public void registrarNuevoUsuario(Usuario miUsuario) {
 		try {
 			if (miUsuario != null) {
@@ -44,6 +47,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void actualizarUsuario(Usuario miUsuario) {
 		try {
 			if (miUsuario != null) {
@@ -58,6 +62,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void borrarUsuario(Usuario miUsuario) {
 		try {
 			if (miUsuario != null) {
@@ -73,6 +78,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Usuario autenticarUsuario(String login, String password) {
 		Usuario usuario = buscarUsuarioPorLogin(login);
 		if (usuario == null)
@@ -88,6 +94,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return null; // solo devuelve el usuario si su password es correcto
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Usuario buscarUsuarioPorId(Long id) {
 		Usuario usuario = null;
 		try {
@@ -110,6 +117,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return usuario;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Usuario buscarUsuarioPorLogin(String login) {
 		Usuario usuario = null;
 		try {
@@ -134,6 +142,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return usuario;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Usuario> obtenerListaUsuarios() {
 		List<Usuario> usuarios;
 		try {
@@ -146,6 +155,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return usuarios;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Cliente> obtenerListaClientes() {
 		List<Cliente> clientes;
 		try {
@@ -158,6 +168,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return clientes;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Programador> obtenerListaProgramadores() {
 		List<Programador> programadores;
 		try {
@@ -170,6 +181,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return programadores;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void registrarApp(App miApp) {
 		try {
 			if (miApp != null) {
@@ -188,6 +200,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void actualizarApp(App miApp) {
 		try {
 			if (miApp != null) {
@@ -202,6 +215,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void borrarApp(App miApp) {
 		try {
 			if (miApp != null) {				
@@ -217,6 +231,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public App buscarAppPorId(Long id) {
 		App app = null;
 		try {
@@ -239,6 +254,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return app;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public App buscarAppPorTitulo(String miTitulo) {
 		App app = null;
 		try {
@@ -261,6 +277,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return app;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<App> obtenerAppsProgramador(Programador miProgramador) {
 		List<App> apps = null;
 		if (miProgramador != null) {
@@ -273,6 +290,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return apps;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<App> obtenerAppsCliente(Cliente miCliente) {
 		List<App> apps = null;
 		if (miCliente != null) {
@@ -285,6 +303,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return apps;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Cliente> obtenerClientesApp(App miApp) {
 		List<Cliente> clientes = null;
 		if (miApp != null){
@@ -296,6 +315,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return clientes;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void cancelarClientes(App miApp) {
 		if (miApp != null){
 			List<Cliente> clientes = obtenerClientesApp(miApp); 
@@ -324,6 +344,7 @@ public class UsuarioImplementation implements UsuarioService {
 		
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void registrarNuevaVersion(Version miVersion) {
 		try {
 			if (miVersion != null) {
@@ -338,6 +359,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void borrarVersion(Version miVersion) {
 		try {
 			if (miVersion != null) {
@@ -362,6 +384,7 @@ public class UsuarioImplementation implements UsuarioService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Version BuscarVersionPorId(Long id) {
 		Version version = null;
 		try {
@@ -384,6 +407,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return version;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Version> obtenerListaVersiones(App miApp) {
 		List<Version> versiones = null;
 		if (miApp != null) {
@@ -396,7 +420,7 @@ public class UsuarioImplementation implements UsuarioService {
 		return versiones;
 	}
 
-	//TODO : logs
+	@Transactional(value = "miTransactionManager")
 	public Version obtenerUltimaVersion(App miApp) {
 		Version v = null;
 		

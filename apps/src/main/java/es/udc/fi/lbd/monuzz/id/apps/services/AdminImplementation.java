@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.daos.CategoriaDAO;
 import es.udc.fi.lbd.monuzz.id.apps.daos.TipoAppDAO;
@@ -26,6 +27,8 @@ public class AdminImplementation implements AdminService {
 	@Autowired
 	private CategoriaDAO categoriaDAO;
 
+	
+	@Transactional(value = "miTransactionManager")
 	public void registrarNuevoTipoApp(TipoApp miTipo) {
 		try {
 			if (miTipo != null) {
@@ -40,6 +43,7 @@ public class AdminImplementation implements AdminService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void borrarTipoApp(TipoApp miTipo) {
 		try {
 			if (miTipo != null) {
@@ -55,6 +59,7 @@ public class AdminImplementation implements AdminService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public TipoApp buscarTipoAppPorId(Long id) {
 		TipoApp tipoApp = null;
 		try {
@@ -75,6 +80,7 @@ public class AdminImplementation implements AdminService {
 		return tipoApp;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public TipoApp buscarTipoAppPorNombre(String nombre) {
 		TipoApp tipoApp = null;
 		try {
@@ -96,6 +102,7 @@ public class AdminImplementation implements AdminService {
 		return tipoApp;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<TipoApp> buscarTodosTipoApp() {
 		List<TipoApp> tipoApps;
 		try {
@@ -108,6 +115,7 @@ public class AdminImplementation implements AdminService {
 		return tipoApps;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void registrarNuevaCategoria(Categoria miCategoria) {
 		try {
 			if (miCategoria != null) {
@@ -130,6 +138,7 @@ public class AdminImplementation implements AdminService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void modificarCategoria(Categoria miCategoria) {
 		try {
 			if (miCategoria != null) {
@@ -145,6 +154,7 @@ public class AdminImplementation implements AdminService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public void borrarCategoria(Categoria miCategoria) {
 		try {
 			if (miCategoria != null) {
@@ -161,6 +171,7 @@ public class AdminImplementation implements AdminService {
 		}
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Categoria buscarCategoriaPorId(Long id) {
 		Categoria categoria = null;
 		try {
@@ -181,6 +192,7 @@ public class AdminImplementation implements AdminService {
 		return categoria;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Categoria buscarCategoriaPorNombre(String nombre) {
 		Categoria categoria = null;
 		try {
@@ -202,6 +214,7 @@ public class AdminImplementation implements AdminService {
 		return categoria;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Categoria> buscarCategoriasPrincipales() {
 		List<Categoria> categorias = null;
 		try {
@@ -214,6 +227,7 @@ public class AdminImplementation implements AdminService {
 		return categorias;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<Categoria> buscarSubcategorias(Categoria miCategoria) {
 		List<Categoria> subCategorias = null;
 		try {
@@ -229,6 +243,7 @@ public class AdminImplementation implements AdminService {
 		return subCategorias;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
 		Long n = new Long(0);
 		try {
@@ -252,6 +267,7 @@ public class AdminImplementation implements AdminService {
 		return n;
 	}
 
+	@Transactional(value = "miTransactionManager")
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {
 		List<App> apps = null;
 		try {

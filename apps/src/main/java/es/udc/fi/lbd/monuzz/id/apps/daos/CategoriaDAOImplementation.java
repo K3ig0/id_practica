@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Categoria;
@@ -16,31 +15,31 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public Long create(Categoria miCategoria) {
 		Long id = (Long) sessionFactory.getCurrentSession().save(miCategoria);
 		return id;
 	}
 
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public void remove(Categoria miCategoria) {
 
 		sessionFactory.getCurrentSession().delete(miCategoria);	
 	}
 
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public void update(Categoria miCategoria) {
 
 		sessionFactory.getCurrentSession().update(miCategoria);			
 	}
 
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public Categoria findById(Long idCategoria) {
 
 		return (Categoria) sessionFactory.getCurrentSession().get(Categoria.class, idCategoria);
 	}
 
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public Categoria findByNombre(String nombreCategoria) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where nombre=:nombreCategoria");
 		q.setString("nombreCategoria",nombreCategoria);
@@ -48,14 +47,14 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public List<Categoria> findFirstLevel() {
 
 		return sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where id_categoria_madre is null order by nombre").list();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
 		// Subcategorías directas (1 nivel)
 		
@@ -87,7 +86,7 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 		 return subCategorias;
 */	}
 
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public Long getNumApps(Categoria miCategoria) {
 		
 		Query q = sessionFactory.getCurrentSession().createQuery("select count(*) from " + App.class.getName() + " a where a.categoria = :c");
@@ -96,7 +95,7 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional(value="miTransactionManager")
+	//@Transactional(value="miTransactionManager")
 	public List<App> getApps(Categoria miCategoria) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a where a.categoria = :c");
 		q.setEntity("c", miCategoria);

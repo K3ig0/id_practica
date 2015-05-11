@@ -211,7 +211,6 @@ public class UsuarioImplementation implements UsuarioService {
 				log.info("[Info]UsuarioImplementation[borrarApp(<Clase> App)] ==> Borrando la app: "
 						+ miApp.toString() + " ...");
 				
-				
 				/*
 				////para comprobar si soluciona StaleException (hibernate espera lo que no hay en la BD, podría solucionarse en otros gestores mediante SET NOCOUNT ON)
 				List<Version> versiones=new ArrayList<Version>();
@@ -311,36 +310,40 @@ public class UsuarioImplementation implements UsuarioService {
 
 	public List<Cliente> obtenerClientesApp(App miApp) {
 		List<Cliente> clientes = null;
-		if (miApp == null)
-			log.error("[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> miApp = null");
-		else {
+		if (miApp != null){
 			clientes = appDAO.findAllClientes(miApp);
 			log.info("[Info]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> Obtenidos los clientes para la app: "+miApp.toString());
 		}
+		else
+			log.error("[Error]UsuarioImplementation[obtenerClientesApp(<Class> App)] ==> miApp = null");
 		return clientes;
 	}
 
 	public void cancelarClientes(App miApp) {
-		List<Cliente> clientes = obtenerClientesApp(miApp); 
-
-		// encontrar las apps para cada cliente, quitar dicha app de su lista y actualizar el usuario
-		for (Cliente c : clientes) { 
-			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
-					+ miApp.toString()
-					+ " para el cliente con id: "
-					+ c.getIdUsuario() + " ...");	
-			
-			List<App> apps = appDAO.findAllByCliente(c);
-			apps.remove(miApp);
-			c.setApps(apps);
-			//c.getApps().remove(miApp); si fuese eager la n:m y no harían falta las tres líneas superiores
-			usuarioDAO.update(c);
-			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
-					+ miApp.toString()
-					+ " correctamente para el último cliente");
-		}
-		log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
-				+ miApp.toString());
+		if (miApp != null){
+			List<Cliente> clientes = obtenerClientesApp(miApp); 
+	
+				// quitar la app de la lista de cada cliente con SetApps, luego
+				// hacer usuarioDAO.update() y lanzar un remove de que dicho usuario
+				// ya no está ligado a dicha app en cli_app
+			for (Cliente c : clientes) {	// todos los clientes obtenidos tienen
+											// la app en su lista
+				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
+						+ miApp.toString() + " para el cliente con id: " + c.getIdUsuario() + " ...");	
+				
+				List<App> apps = appDAO.findAllByCliente(c);
+				apps.remove(miApp);
+				c.setApps(apps);
+				//c.getApps().remove(miApp); si fuese eager la n:m y no harían falta las tres líneas superiores
+				usuarioDAO.update(c);
+				log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ...Eliminada la app "
+						+ miApp.toString()
+						+ " correctamente para el último cliente");
+			}
+			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> ¡Completado! Cancelados los clientes de la app: "
+					+ miApp.toString());
+		} else
+			log.error("[Error]UsuarioImplementation[cancelarClientes(<Class> App)] ==> miApp = null");
 		
 	}
 
@@ -361,16 +364,22 @@ public class UsuarioImplementation implements UsuarioService {
 	public void borrarVersion(Version miVersion) {
 		try {
 			if (miVersion != null) {
-				if (obtenerListaVersiones(miVersion.getApp()).size() == 1)
+				App miApp = miVersion.getApp();
+				List <Version> versiones = miApp.getVersiones();
+				if (versiones.size() == 1)
 					throw new RuntimeException("No se puede borrar la última versión para una app");
-				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> Borrando la versión: "
-						+ miVersion.toString() + " ...");
+				
+				versiones.remove(miVersion);
+				miApp.setVersiones(versiones);
+				appDAO.update(miApp);
 				versionDAO.remove(miVersion);
-				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> ...Versión borrada satisfactoriamente");
+				
+				log.info("[Info]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> Versión borrada satisfactoriamente");
 			} else
 				log.error("[Error]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> version = null");
 		} catch (DataAccessException e) {
-			log.error("[Error]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> No se pudo registrar la versión");
+			log.error("[Error]UsuarioImplementation[borrarVersion(<Clase> Version)] ==> No se pudo borrar la versión "
+					+ miVersion.toString());
 			throw e;
 		}
 	}
@@ -403,13 +412,13 @@ public class UsuarioImplementation implements UsuarioService {
 			versiones = versionDAO.findAllByApp(miApp);
 			log.info("[Info]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> Recuperada correctamente la lista de versiones para la app: "
 					+ miApp.toString());
-		}
-		else
+		} else
 			log.error("[Error]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> miApp = null");
 		
 		return versiones;
 	}
 
+	//TODO : logs
 	public Version obtenerUltimaVersion(App miApp) {
 		Version v = null;
 		
@@ -422,5 +431,5 @@ public class UsuarioImplementation implements UsuarioService {
 		
 		return v;
 	}
-
+		
 }

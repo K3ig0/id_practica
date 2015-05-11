@@ -1,10 +1,8 @@
 package es.udc.fi.lbd.monuzz.id.apps.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -325,11 +323,8 @@ public class UsuarioImplementation implements UsuarioService {
 	public void cancelarClientes(App miApp) {
 		List<Cliente> clientes = obtenerClientesApp(miApp); 
 
-			// quitar la app de la lista de cada cliente con SetApps, luego
-			// hacer usuarioDAO.update() y lanzar un remove de que dicho usuario
-			// ya no está ligado a dicha app en cli_app
-		for (Cliente c : clientes) { // todos los clientes obtenidos tienen
-										// la app en su lista
+		// encontrar las apps para cada cliente, quitar dicha app de su lista y actualizar el usuario
+		for (Cliente c : clientes) { 
 			log.info("[Info]UsuarioImplementation[cancelarClientes(<Class> App)] ==> Eliminando la app "
 					+ miApp.toString()
 					+ " para el cliente con id: "
@@ -408,36 +403,24 @@ public class UsuarioImplementation implements UsuarioService {
 			versiones = versionDAO.findAllByApp(miApp);
 			log.info("[Info]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> Recuperada correctamente la lista de versiones para la app: "
 					+ miApp.toString());
-			return versiones;
 		}
-		log.error("[Error]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> miApp = null");
+		else
+			log.error("[Error]UsuarioImplementation[obtenerListaVersiones(<Class> App)] ==> miApp = null");
+		
 		return versiones;
 	}
 
-	//TODO : logs
 	public Version obtenerUltimaVersion(App miApp) {
-		if (miApp != null)
-			return obtenerListaVersiones(miApp).get(0); //la más reciente pues se devuelven ordenadas
-	
+		Version v = null;
 		
-		return null;
-		
-		/*List<Version> versiones = obtenerListaVersiones(miApp);
-		Timestamp last = null;
-
-		for (Version v : versiones) {
-			if (last != null) {
-				
-				//si last es un Timestamp más antiguo que el de la versión
-				if (last.compareTo(v.getFechaDePublicacion()) < 0 )
-					last = v.getFechaDePublicacion();
-			}
-			else
-				last = v.getFechaDePublicacion();
-			if (versiones.get(versiones.size()-1) == v)
-				return v;
+		if (miApp != null) {
+			v = obtenerListaVersiones(miApp).get(0); //la más reciente pues se devuelven ordenadas
+			log.info("[Info]UsuarioImplementation[obtenerUltimaVersion(<Class> App)] ==> Última versión obtenida correctamente para la app: "+miApp.toString());
 		}
-		return null; //no hay versiones para dicha aplicación*/
+		else
+			log.error("[Error]UsuarioImplementation[obtenerUltimaVersion(<Class> App)] ==> miApp = null");
+		
+		return v;
 	}
 
 }

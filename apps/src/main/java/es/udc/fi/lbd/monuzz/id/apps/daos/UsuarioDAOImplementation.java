@@ -5,13 +5,11 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
-import es.udc.fi.lbd.monuzz.id.apps.model.TipoApp;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
 
 @Repository
@@ -52,18 +50,21 @@ public class UsuarioDAOImplementation implements UsuarioDAO {
 		return (Usuario) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<Usuario> findAll() {
 		
 		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName() + " order by ap1,ap2,nombre,usuario").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<Cliente> findAllClientes() {
 
 		return sessionFactory.getCurrentSession().createQuery( "from " + Usuario.class.getName() + " where TIPO_USUARIO='CLI'").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<Programador> findAllProgramadores() {
 

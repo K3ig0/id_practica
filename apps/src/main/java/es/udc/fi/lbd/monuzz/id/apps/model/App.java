@@ -70,19 +70,19 @@ public class App  {
 	}
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_programador")
+	@JoinColumn(name="id_programador", nullable=false)
 	public Programador getAutor() {
 		return autor;
 	}
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_categoria")
+	@JoinColumn(name="id_categoria", nullable=false)
 	public Categoria getCategoria() {
 		return categoria;
 	}
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_tipo_app")
+	@JoinColumn(name="id_tipo_app", nullable=false)
 	public TipoApp getTipoApp() {
 		return tipoApp;
 	}

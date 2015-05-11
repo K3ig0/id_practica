@@ -54,7 +54,7 @@ public class Version {
 	}
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_app")
+	@JoinColumn(name="id_app", nullable=false)
 	public App getApp() {
 		return app;
 	}

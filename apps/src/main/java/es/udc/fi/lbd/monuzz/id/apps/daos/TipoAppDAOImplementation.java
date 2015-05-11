@@ -41,6 +41,7 @@ public class TipoAppDAOImplementation implements TipoAppDAO {
 		return (TipoApp) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<TipoApp> findAll() {
 		

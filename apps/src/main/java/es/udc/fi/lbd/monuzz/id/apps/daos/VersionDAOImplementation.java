@@ -42,6 +42,7 @@ public class VersionDAOImplementation implements VersionDAO {
 		return (Version) sessionFactory.getCurrentSession().get(Version.class,id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value = "miTransactionManager")
 	public List<Version> findAllByApp(App miApp) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + Version.class.getName() + " v where v.app=:app order by fecha_publicacion desc");

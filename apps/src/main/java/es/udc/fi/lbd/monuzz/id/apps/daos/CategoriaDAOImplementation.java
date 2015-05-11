@@ -1,11 +1,8 @@
 package es.udc.fi.lbd.monuzz.id.apps.daos;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -50,12 +47,14 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 		return (Categoria) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findFirstLevel() {
 
 		return sessionFactory.getCurrentSession().createQuery("from " + Categoria.class.getName() + " where id_categoria_madre is null order by nombre").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<Categoria> findSubcategories(Categoria miCategoria) {
 		// Subcategorías directas (1 nivel)
@@ -96,6 +95,7 @@ public class CategoriaDAOImplementation implements CategoriaDAO {
 		return (Long) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value="miTransactionManager")
 	public List<App> getApps(Categoria miCategoria) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a where a.categoria = :c");

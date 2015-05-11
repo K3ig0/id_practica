@@ -3,7 +3,6 @@ package es.udc.fi.lbd.monuzz.id.apps.services;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,12 +116,12 @@ public class AdminImplementation implements AdminService {
 						+ miCategoria.toString());
 				
 				//CascadeType.PERSIST manualmente (creación)
-				Set<Categoria> subCategorias = miCategoria.getSubcategorias();
+				/*Set<Categoria> subCategorias = miCategoria.getSubcategorias();
 
 				if (!subCategorias.isEmpty())
 					for (Categoria subCat : subCategorias) {
 						registrarNuevaCategoria(subCat);
-					}
+					}*/
 			} else
 				log.error("[Error]AdminImplementation[registrarNuevaCategoria(<Clase> categoria)] ==> categoria = null");
 		} catch (DataAccessException e) {

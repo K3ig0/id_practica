@@ -47,13 +47,15 @@ public class Categoria {
 		return nombre;
 	}
 	
+	// Una categoría madre tendrá un NULL en la columna id_categoria_madre, luego ==> nullable=true
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_categoria_madre")
+	@JoinColumn(name="id_categoria_madre", nullable=true)
 	public Categoria getmadre() {
 		return madre;
 	}
 	
-	@OneToMany(mappedBy="madre", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
+	//Igual que el mapeo de la clase Version, solo se crean sus subcategorías con CascadeType.ALL, con otras anotaciones no funciona
+	@OneToMany(mappedBy="madre", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Set<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

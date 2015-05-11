@@ -47,6 +47,7 @@ public class AppDaoImplementation implements AppDAO {
 		return (App) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByProgramador(Programador miProgramador) {
 		Query q = sessionFactory.getCurrentSession().createQuery("select a from " + App.class.getName() + " a where a.autor = :p");
@@ -55,6 +56,7 @@ public class AppDaoImplementation implements AppDAO {
 		return q.list();	
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCliente(Cliente miCliente) {
 		Long id = miCliente.getIdUsuario();
@@ -65,6 +67,7 @@ public class AppDaoImplementation implements AppDAO {
 	}
 
 	//no usado
+	@SuppressWarnings("unchecked")
 	@Transactional(value = "miTransactionManager")
 	public List<App> findAllByCategoria(Categoria miCategoria) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from " + App.class.getName() + " a where a.categoria = :c");
@@ -72,6 +75,7 @@ public class AppDaoImplementation implements AppDAO {
 		return q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional(value = "miTransactionManager")
 	public List<Cliente> findAllClientes(App miApp) {
 		Long id = miApp.getIdApp();
